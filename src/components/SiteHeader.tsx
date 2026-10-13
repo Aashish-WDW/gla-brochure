@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
+import { User } from "lucide-react";
 import logoAsset from "@/assets/golookaround-logo.png.asset.json";
 import { cn } from "@/lib/utils";
+import { INDIVIDUAL_URL } from "./IndividualLink";
 import { ShareButton } from "./ShareButton";
 
 export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
@@ -23,11 +25,14 @@ export function SiteHeader({
   tone = "light",
   className,
   showShare = true,
+  showIndividual = true,
 }: {
   tone?: "light" | "ink";
   className?: string;
   showShare?: boolean;
+  showIndividual?: boolean;
 }) {
+  const pill = cn("btn btn-sm", tone === "ink" ? "btn-ghost-ink" : "btn-outline");
   return (
     <header
       className={cn(
@@ -37,7 +42,31 @@ export function SiteHeader({
       )}
     >
       <Logo tone={tone} />
-      {showShare && <ShareButton tone={tone} />}
+      <div className="flex items-center gap-2 sm:gap-3">
+        {showIndividual && (
+          <>
+            <a
+              href={INDIVIDUAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(pill, "hidden sm:inline-flex")}
+            >
+              <User className="size-4 shrink-0" aria-hidden />
+              Looking for an individual?
+            </a>
+            <a
+              href={INDIVIDUAL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Looking for an individual? Visit golookaround.com"
+              className={cn(pill, "sm:hidden")}
+            >
+              <User className="size-4 shrink-0" aria-hidden />
+            </a>
+          </>
+        )}
+        {showShare && <ShareButton tone={tone} />}
+      </div>
     </header>
   );
 }
