@@ -49,8 +49,8 @@ describe("itinerary pricing", () => {
 describe("itinerary schedule", () => {
   it("places stops sequentially with a 30 minute buffer", () => {
     const out = schedule([base("a", 1, { startAt: 9 }), base("b", 1)]);
-    expect(out[0].start).toBe(9);
-    expect(out[1].start).toBe(11.5);
+    expect(out[0]!.start).toBe(9);
+    expect(out[1]!.start).toBe(11.5);
   });
 });
 
@@ -97,7 +97,7 @@ describe("mock content", () => {
   });
 
   it("builds stops from listings", () => {
-    const l = LISTINGS[0];
+    const l = LISTINGS[0]!;
     expect(listingToStop(l).id).toBe(l.id);
   });
 

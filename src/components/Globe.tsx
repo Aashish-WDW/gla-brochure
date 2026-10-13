@@ -62,7 +62,7 @@ export function Globe({
       .then((mod) => {
         if (!live) return;
         const topo = (mod.default ?? mod) as unknown as Topology;
-        const fc = feature(topo, topo.objects.countries) as unknown as FeatureCollection;
+        const fc = feature(topo, topo.objects["countries"]!) as unknown as FeatureCollection;
         setCountries(fc.features as Country[]);
       })
       .catch(() => live && onFallback());

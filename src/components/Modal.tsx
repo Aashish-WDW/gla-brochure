@@ -7,7 +7,7 @@ interface ModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  description?: string;
+  description?: string | undefined;
   children: ReactNode;
   /** "side" docks to the right on desktop, bottom sheet on mobile. */
   variant?: "center" | "side";

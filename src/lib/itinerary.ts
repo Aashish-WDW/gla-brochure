@@ -77,14 +77,22 @@ export function moveStop(stops: Stop[], id: string, dir: "up" | "down"): Stop[] 
   const next = stops.map((s) => ({ ...s }));
   if (dir === "up") {
     if (i === 0) return stops;
-    const prev = next[i - 1];
-    if (prev.day !== next[i].day) next[i].day = prev.day;
-    else [next[i - 1], next[i]] = [next[i], next[i - 1]];
+    const prev = next[i - 1]!;
+    const cur = next[i]!;
+    if (prev.day !== cur.day) cur.day = prev.day;
+    else {
+      next[i - 1] = cur;
+      next[i] = prev;
+    }
   } else {
     if (i === next.length - 1) return stops;
-    const after = next[i + 1];
-    if (after.day !== next[i].day) next[i].day = after.day;
-    else [next[i + 1], next[i]] = [next[i], next[i + 1]];
+    const after = next[i + 1]!;
+    const cur = next[i]!;
+    if (after.day !== cur.day) cur.day = after.day;
+    else {
+      next[i + 1] = cur;
+      next[i] = after;
+    }
   }
   return normalise(next);
 }

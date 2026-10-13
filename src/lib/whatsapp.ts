@@ -8,14 +8,14 @@ export interface EnquiryContext {
   /** Itinerary or experience name. */
   subject: string;
   /** Optional reference such as an itinerary ID. */
-  reference?: string;
-  destination?: string;
+  reference?: string | undefined;
+  destination?: string | undefined;
   mode: Mode;
-  partySize?: number;
-  groupType?: string;
-  preferredDate?: string;
-  changes?: string[];
-  notes?: string;
+  partySize?: number | undefined;
+  groupType?: string | undefined;
+  preferredDate?: string | undefined;
+  changes?: string[] | undefined;
+  notes?: string | undefined;
 }
 
 const clean = (s?: string) => (s ?? "").trim();
