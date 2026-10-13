@@ -64,7 +64,7 @@ function IndiaPage() {
 
   return (
     <div className="min-h-dvh bg-background">
-      <SiteHeader className="relative" />
+      <SiteHeader className="relative" showShare={false} />
       <main className="mx-auto max-w-7xl px-4 pb-32 pt-8 sm:px-8 sm:pb-28">
         <div className="animate-fade-up max-w-2xl">
           <p className="eyebrow text-brand-deep">Step 1 · Choose a destination</p>
