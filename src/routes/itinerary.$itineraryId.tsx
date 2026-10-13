@@ -43,8 +43,8 @@ function ItineraryPage() {
   const region = getRegion(itinerary.stateId);
 
   return (
-    <div className="min-h-dvh bg-background pb-24 lg:pb-0">
-      <SiteHeader className="relative" />
+    <div className="relative min-h-dvh bg-background pb-24 lg:pb-0">
+      <SiteHeader tone="ink" className="absolute inset-x-0 top-0" />
 
       <section className="on-ink relative isolate overflow-hidden bg-ink text-ink-foreground">
         <img

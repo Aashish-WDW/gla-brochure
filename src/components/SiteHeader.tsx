@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import logoAsset from "@/assets/golookaround-logo.png.asset.json";
 import { cn } from "@/lib/utils";
+import { ShareButton } from "./ShareButton";
 
 export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
   return (
@@ -9,7 +10,7 @@ export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
       <span
         className={cn(
           "font-brand text-[15px] font-semibold sm:text-xl leading-none tracking-tight",
-          tone === "ink" ? "text-ink-foreground" : "text-foreground",
+          tone === "ink" ? "text-brand-gradient" : "text-foreground",
         )}
       >
         GoLookAround
@@ -34,6 +35,7 @@ export function SiteHeader({
       )}
     >
       <Logo tone={tone} />
+      <ShareButton tone={tone} />
     </header>
   );
 }
