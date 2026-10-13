@@ -76,10 +76,7 @@ export function ListingDialog({ listing, onClose }: { listing: Listing | null; o
       {listing && (
         <EnquiryDialog
           open={enquire}
-          onOpenChange={(o) => {
-            setEnquire(o);
-            if (!o) onClose();
-          }}
+          onOpenChange={setEnquire}
           context={{ subject: listing.title, destination }}
         />
       )}

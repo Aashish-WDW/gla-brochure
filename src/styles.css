@@ -80,6 +80,14 @@
   --border: oklch(0.915 0.006 262);
   --input: oklch(0.88 0.008 262);
   --ring: var(--brand);
+
+  /* Globe canvas palette (tokens read by the canvas renderer) */
+  --globe-sea: oklch(0.2 0.035 264);
+  --globe-land: oklch(0.36 0.03 262);
+  --globe-land-hover: oklch(0.48 0.04 262);
+  --globe-line: oklch(0.7 0.04 262 / 22%);
+  --globe-india: oklch(0.546 0.215 262.9);
+  --globe-india-hover: oklch(0.63 0.2 262.9);
 }
 
 @layer base {
