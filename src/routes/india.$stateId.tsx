@@ -199,7 +199,7 @@ function StatePage() {
 
             <Tabs.List
               aria-label="Listing categories"
-              className="fixed inset-x-0 bottom-0 z-40 border-t bg-background/90 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-md sm:px-8"
+              className="shadow-above fixed inset-x-0 bottom-0 z-40 bg-background/90 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-md sm:px-8"
             >
               <div className="mx-auto grid max-w-2xl grid-cols-3 gap-1.5">
                 {CATEGORIES.map((c) => {
