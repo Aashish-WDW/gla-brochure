@@ -135,7 +135,7 @@ function IndiaPage() {
                 </span>
               </div>
 
-              <div className="mt-4 border-t border-border/70 pt-4">
+              <div className="mt-4 border-t border-border/70 pt-4 lg:hidden">
                 <p className="eyebrow text-brand-deep">How it works</p>
                 <ol className="mt-3 grid gap-3 sm:grid-cols-3">
                   {HOW_IT_WORKS.map((t, i) => (
