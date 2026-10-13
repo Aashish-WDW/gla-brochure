@@ -29,6 +29,12 @@ export const Route = createFileRoute("/india/")({
   component: IndiaPage,
 });
 
+const HOW_IT_WORKS = [
+  "Select a state to see what's available and starting prices.",
+  "Browse Experiences, Events and Retreats.",
+  "Open a curated itinerary, edit it, and enquire on WhatsApp.",
+];
+
 function useIsDesktop() {
   const [d, setD] = useState(false);
   useEffect(() => {
@@ -140,21 +146,11 @@ function IndiaPage() {
               </div>
             ) : (
               <div className="rounded-3xl border bg-card p-6">
-                <p className="eyebrow text-brand-deep">How it works</p>
-                <ol className="mt-3 space-y-3 text-sm">
-                  {[
-                    "Select a state to see what's available and starting prices.",
-                    "Browse Experiences, Events and Retreats.",
-                    "Open a curated itinerary, edit it, and enquire on WhatsApp.",
-                  ].map((t, i) => (
-                    <li key={t} className="flex gap-3">
-                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand text-xs font-extrabold text-primary-foreground">
-                        {i + 1}
-                      </span>
-                      {t}
-                    </li>
-                  ))}
-                </ol>
+                <p className="text-sm font-bold">Pick a state</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Tap any blue state on the map to see its experiences, events and retreats, with indicative
+                  starting prices.
+                </p>
               </div>
             )}
           </aside>
