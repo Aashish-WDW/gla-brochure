@@ -200,7 +200,6 @@ function IndiaPage() {
         </section>
       </main>
 
-
       {/* Mobile / tablet: details open in a bottom sheet */}
       <Modal
         open={!!selected && !isDesktop}
