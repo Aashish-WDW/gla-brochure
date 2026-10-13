@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IndiaIndexRouteImport } from './routes/india.index'
+import { Route as IndiaStateIdRouteImport } from './routes/india.$stateId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const IndiaIndexRoute = IndiaIndexRouteImport.update({
   path: '/india/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndiaStateIdRoute = IndiaStateIdRouteImport.update({
+  id: '/india/$stateId',
+  path: '/india/$stateId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/india/$stateId': typeof IndiaStateIdRoute
   '/india/': typeof IndiaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/india/$stateId': typeof IndiaStateIdRoute
   '/india': typeof IndiaIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/india/$stateId': typeof IndiaStateIdRoute
   '/india/': typeof IndiaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/india/'
+  fullPaths: '/' | '/india/$stateId' | '/india/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/india'
-  id: '__root__' | '/' | '/india/'
+  to: '/' | '/india/$stateId' | '/india'
+  id: '__root__' | '/' | '/india/$stateId' | '/india/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  IndiaStateIdRoute: typeof IndiaStateIdRoute
   IndiaIndexRoute: typeof IndiaIndexRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndiaIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/india/$stateId': {
+      id: '/india/$stateId'
+      path: '/india/$stateId'
+      fullPath: '/india/$stateId'
+      preLoaderRoute: typeof IndiaStateIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  IndiaStateIdRoute: IndiaStateIdRoute,
   IndiaIndexRoute: IndiaIndexRoute,
 }
 export const routeTree = rootRouteImport
