@@ -75,6 +75,11 @@ export function ListingCard({
           </p>
         )}
         <p className="line-clamp-3 text-sm text-muted-foreground">{listing.description}</p>
+        {mode === "group" && listing.audience.includes("group") && (
+          <p className="flex items-center gap-1.5 text-xs font-bold text-brand-deep">
+            <Users className="size-3.5" aria-hidden /> Minimum group size applies — varies by listing
+          </p>
+        )}
         {!suits && (
           <p className="text-xs font-bold text-muted-foreground">
             Better suited to {mode === "group" ? "individuals" : "groups"}
