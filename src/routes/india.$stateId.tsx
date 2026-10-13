@@ -1,6 +1,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ChevronRight, MessageCircle, Sparkles } from "lucide-react";
+import { CalendarDays, ChevronRight, Compass, Leaf, MessageCircle, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { EnquiryDialog } from "@/components/EnquiryDialog";
 import { ItineraryCard } from "@/components/ItineraryCard";
@@ -57,6 +57,7 @@ export const Route = createFileRoute("/india/$stateId")({
 });
 
 const CATEGORIES: Category[] = ["experience", "event", "retreat"];
+const TAB_ICON = { experience: Compass, event: CalendarDays, retreat: Leaf } as const;
 
 function StatePage() {
   const { stateId } = Route.useParams();
@@ -109,7 +110,7 @@ function StatePage() {
         </div>
       </section>
 
-      <main className="mx-auto max-w-7xl px-4 pb-24 pt-10 sm:px-8">
+      <main className="mx-auto max-w-7xl px-4 pb-36 pt-10 sm:px-8">
         {!content || sum.total === 0 ? (
           <div className="mx-auto max-w-xl rounded-3xl border p-8 text-center">
             <Sparkles className="mx-auto size-8 text-brand" aria-hidden />
@@ -135,7 +136,7 @@ function StatePage() {
           <>
             <p className="rounded-2xl bg-brand-soft p-4 text-sm font-semibold text-brand-deep">
               {mode === "group"
-                ? `Group view · pricing shown for ${people} people where per-group rates apply. Listings suited to groups appear first.`
+                ? `Group view · pricing shown for ${people} people where per-group rates apply. Listings suited to groups appear first. Each experience, event, retreat or excursion has its own minimum group size, which may vary, so we confirm it when you enquire.`
                 : `Individual view · prices shown per person. Listings suited to individuals and small parties appear first.`}
             </p>
 
@@ -156,32 +157,15 @@ function StatePage() {
               </section>
             )}
 
-            <section className="mt-16" aria-labelledby="browse">
+            <Tabs.Root value={tab} onValueChange={(v) => setTab(v as Category)}>
+            <section className="mt-16 scroll-mt-24" aria-labelledby="browse">
               <h2 id="browse" className="text-4xl">
-                Browse by category
+                {CATEGORY_LABEL[tab]}
               </h2>
-              <Tabs.Root value={tab} onValueChange={(v) => setTab(v as Category)} className="mt-6">
-                <Tabs.List className="flex flex-wrap items-center gap-2" aria-label="Listing categories">
-                  {CATEGORIES.map((c) => {
-                    const n = listingsFor(stateId, c).length;
-                    const primary = c === "experience";
-                    return (
-                      <Tabs.Trigger
-                        key={c}
-                        value={c}
-                        className={cn(
-                          "inline-flex min-h-11 items-center gap-2 rounded-full border px-5 text-sm font-bold transition-colors data-[state=active]:border-brand data-[state=active]:bg-brand data-[state=active]:text-primary-foreground",
-                          primary ? "text-base sm:px-7" : "text-muted-foreground hover:text-foreground",
-                          primary && "ring-2 ring-brand/20 data-[state=active]:ring-brand/40",
-                        )}
-                      >
-                        {CATEGORY_LABEL[c]}
-                        <span className="rounded-full bg-foreground/10 px-2 py-0.5 text-xs">{n}</span>
-                      </Tabs.Trigger>
-                    );
-                  })}
-                </Tabs.List>
-
+              <p className="mt-2 text-sm text-muted-foreground">
+                Use the tabs at the bottom of the screen to switch between experiences, events and retreats.
+              </p>
+              <div className="mt-6">
                 {CATEGORIES.map((c) => {
                   const list = sortForMode(listingsFor(stateId, c), mode);
                   return (
@@ -210,8 +194,33 @@ function StatePage() {
                     </Tabs.Content>
                   );
                 })}
-              </Tabs.Root>
+              </div>
             </section>
+
+            <Tabs.List
+              aria-label="Listing categories"
+              className="fixed inset-x-0 bottom-0 z-40 border-t bg-background/90 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-md sm:px-8"
+            >
+              <div className="mx-auto grid max-w-2xl grid-cols-3 gap-1.5">
+                {CATEGORIES.map((c) => {
+                  const n = listingsFor(stateId, c).length;
+                  const Icon = TAB_ICON[c];
+                  return (
+                    <Tabs.Trigger
+                      key={c}
+                      value={c}
+                      className="flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-2xl px-2 text-xs font-bold text-muted-foreground transition-colors hover:text-foreground data-[state=active]:bg-brand data-[state=active]:text-primary-foreground sm:flex-row sm:gap-2 sm:text-sm"
+                    >
+                      <Icon className="size-5" aria-hidden />
+                      <span>
+                        {CATEGORY_LABEL[c]} <span className="opacity-80">({n})</span>
+                      </span>
+                    </Tabs.Trigger>
+                  );
+                })}
+              </div>
+            </Tabs.List>
+            </Tabs.Root>
 
             <p className="mt-12 text-xs text-muted-foreground">
               Sample content for prototype purposes. Prices are indicative and may change with dates, season and group

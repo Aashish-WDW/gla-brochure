@@ -61,6 +61,10 @@ export function ListingDialog({ listing, onClose }: { listing: Listing | null; o
                 ))}
               </ul>
             </div>
+            <p className="flex items-start gap-2 rounded-xl bg-brand-soft p-3 text-sm font-semibold text-brand-deep">
+              <Users className="mt-0.5 size-4 shrink-0" aria-hidden />
+              For groups, a minimum number of people applies and it can vary for each experience, event, retreat or excursion. We confirm it when you enquire.
+            </p>
             <div className="flex items-end justify-between rounded-2xl border p-4">
               <PriceTag price={listing.price} />
               <p className="max-w-[12rem] text-right text-xs text-muted-foreground">

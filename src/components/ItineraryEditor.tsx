@@ -130,6 +130,12 @@ export function ItineraryEditor({ itinerary }: { itinerary: Itinerary }) {
       <p className="text-xs text-muted-foreground">
         Prices may vary with season, dates, group size and availability. This is not a booking.
       </p>
+      {mode === "group" && (
+        <p className="text-xs font-semibold text-brand-deep">
+          Group bookings have a minimum number of people that can vary for each experience, event, retreat or excursion
+          in this plan. We confirm it when you enquire.
+        </p>
+      )}
     </div>
   );
 
