@@ -183,21 +183,6 @@ function IndiaPage() {
               </li>
             ))}
           </ul>
-
-          <details className="mt-10 rounded-2xl border p-5">
-            <summary className="cursor-pointer text-sm font-bold">
-              Other states &amp; territories — listings coming as they're verified ({others.length})
-            </summary>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {others.map((r) => (
-                <li key={r.id}>
-                  <button type="button" className="chip chip-outline min-h-9 px-3 hover:border-brand" onClick={() => setSelected(r.id)}>
-                    {r.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </details>
         </section>
       </main>
 
