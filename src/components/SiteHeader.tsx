@@ -32,7 +32,7 @@ export function SiteHeader({
     <header
       className={cn(
         "z-30 flex items-center justify-between gap-3 px-4 py-3 sm:px-8 sm:py-4",
-        tone === "ink" ? "on-ink" : "border-b bg-background/85 backdrop-blur-md",
+        tone === "ink" ? "on-ink" : "shadow-below bg-background/85 backdrop-blur-md",
         className,
       )}
     >

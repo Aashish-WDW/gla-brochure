@@ -296,7 +296,7 @@ export function ItineraryEditor({ itinerary }: { itinerary: Itinerary }) {
       </div>
 
       {/* Mobile sticky action bar */}
-      <div className="fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-3 border-t bg-background/95 px-4 py-3 backdrop-blur lg:hidden">
+      <div className="shadow-above fixed inset-x-0 bottom-0 z-30 flex items-center justify-between gap-3 bg-background/95 px-4 py-3 backdrop-blur lg:hidden">
         <div>
           <p className="text-xs text-muted-foreground">Estimate{customised ? " · customised" : ""}</p>
           <p className="text-lg font-extrabold leading-tight">{formatINR(sum.knownTotal)}</p>
