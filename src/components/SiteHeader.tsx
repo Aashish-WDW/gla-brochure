@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
+import { User } from "lucide-react";
 import logoAsset from "@/assets/golookaround-logo.png.asset.json";
 import { cn } from "@/lib/utils";
+import { INDIVIDUAL_URL } from "./IndividualLink";
 import { ShareButton } from "./ShareButton";
 
 export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
