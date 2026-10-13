@@ -102,7 +102,7 @@ function IndiaPage() {
                 <IndiaMap
                   selectedId={selected}
                   onSelect={setSelected}
-                  className={cn("mx-auto max-h-[60dvh] max-w-xl lg:max-h-[78dvh]", full && "max-h-[66dvh]")}
+                  className={cn("mx-auto max-h-[78dvh] max-w-xl", full && "max-h-[66dvh]")}
                 />
                 <div className="pointer-events-none absolute right-0 top-0 hidden max-w-[15rem] lg:block">
                   <div className="rounded-2xl border border-border/70 bg-background/92 p-3 shadow-sm backdrop-blur-sm">
