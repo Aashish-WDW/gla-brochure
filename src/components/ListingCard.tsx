@@ -82,7 +82,7 @@ export function ListingCard({
         )}
         {!suits && (
           <p className="text-xs font-bold text-muted-foreground">
-            Looking for an individual? Open for the golookaround.com link
+            Individual experience — find it on golookaround.com
           </p>
         )}
         <div className="mt-auto flex items-end justify-between border-t pt-4">

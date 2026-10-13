@@ -44,7 +44,7 @@ export function ItineraryCard({ itinerary }: { itinerary: Itinerary }) {
         <p className="text-sm text-muted-foreground">{itinerary.summary}</p>
         {!suits && (
           <p className="text-xs font-bold text-muted-foreground">
-            Designed for {mode === "group" ? "individuals" : "groups"} — can be adapted.
+            Designed for individuals — can be adapted for groups.
           </p>
         )}
         <div className="mt-auto flex items-end justify-between border-t pt-4">

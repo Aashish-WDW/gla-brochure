@@ -145,8 +145,7 @@ export function ItineraryEditor({ itinerary }: { itinerary: Itinerary }) {
         <div>
           {!suits && (
             <p className="mb-6 rounded-2xl border p-4 text-sm font-semibold">
-              This plan was designed for {mode === "group" ? "individuals" : "groups"}. You can still enquire and ask
-              the team to adapt it.
+              This plan was designed for individuals. You can still enquire and ask the team to adapt it for your group.
             </p>
           )}
 
