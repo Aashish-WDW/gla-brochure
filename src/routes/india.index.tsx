@@ -104,7 +104,7 @@ function IndiaPage() {
                   onSelect={setSelected}
                   className={cn("mx-auto max-h-[78dvh] max-w-xl", full && "max-h-[88dvh]")}
                 />
-                <div className="pointer-events-none absolute left-0 top-0 hidden max-w-[15rem] lg:block">
+                <div className="pointer-events-none absolute right-0 top-0 hidden max-w-[15rem] lg:block">
                   <div className="rounded-2xl border border-border/70 bg-background/92 p-3 shadow-sm backdrop-blur-sm">
                     <p className="eyebrow text-brand-deep">How it works</p>
                     <ol className="mt-2 space-y-2 text-xs">
