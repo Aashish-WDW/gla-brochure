@@ -29,6 +29,12 @@ export const Route = createFileRoute("/india/")({
   component: IndiaPage,
 });
 
+const HOW_IT_WORKS = [
+  "Select a state to see what's available and starting prices.",
+  "Browse Experiences, Events and Retreats.",
+  "Open a curated itinerary, edit it, and enquire on WhatsApp.",
+];
+
 function useIsDesktop() {
   const [d, setD] = useState(false);
   useEffect(() => {
@@ -92,11 +98,28 @@ function IndiaPage() {
                 {full ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
                 {full ? "Exit full screen" : "Full-screen map"}
               </button>
-              <IndiaMap
-                selectedId={selected}
-                onSelect={setSelected}
-                className={cn("mx-auto max-h-[78dvh] max-w-xl", full && "max-h-[88dvh]")}
-              />
+              <div className="relative">
+                <IndiaMap
+                  selectedId={selected}
+                  onSelect={setSelected}
+                  className={cn("mx-auto max-h-[78dvh] max-w-xl", full && "max-h-[66dvh]")}
+                />
+                <div className="pointer-events-none absolute right-0 top-0 hidden max-w-[15rem] lg:block">
+                  <div className="rounded-2xl border border-border/70 bg-background/92 p-3 shadow-sm backdrop-blur-sm">
+                    <p className="eyebrow text-brand-deep">How it works</p>
+                    <ol className="mt-2 space-y-2 text-xs">
+                      {HOW_IT_WORKS.map((t, i) => (
+                        <li key={t} className="flex gap-2">
+                          <span className="grid size-5 shrink-0 place-items-center rounded-full bg-brand text-[10px] font-extrabold text-primary-foreground">
+                            {i + 1}
+                          </span>
+                          {t}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
+              </div>
               <div className="mt-3 flex flex-wrap items-center gap-4 text-xs font-bold text-muted-foreground">
                 <span className="inline-flex items-center gap-1.5">
                   <span className="size-3 rounded-sm bg-brand/80" /> Curated listings
@@ -108,8 +131,22 @@ function IndiaPage() {
                   <span className="grid size-4 place-items-center rounded-full bg-ink-foreground text-[9px] font-extrabold text-ink ring-2 ring-brand-deep">
                     n
                   </span>
-                  Listing count
+                Listing count
                 </span>
+              </div>
+
+              <div className="mt-3 border-t border-border/70 pt-3 lg:hidden">
+                <p className="eyebrow text-brand-deep">How it works</p>
+                <ol className="mt-2 grid gap-2 text-xs sm:grid-cols-3">
+                  {HOW_IT_WORKS.map((t, i) => (
+                    <li key={t} className="flex gap-2">
+                      <span className="grid size-5 shrink-0 place-items-center rounded-full bg-brand text-[10px] font-extrabold text-primary-foreground">
+                        {i + 1}
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ol>
               </div>
             </div>
           </section>
@@ -126,21 +163,11 @@ function IndiaPage() {
               </div>
             ) : (
               <div className="rounded-3xl border bg-card p-6">
-                <p className="eyebrow text-brand-deep">How it works</p>
-                <ol className="mt-3 space-y-3 text-sm">
-                  {[
-                    "Select a state to see what's available and starting prices.",
-                    "Browse Experiences, Events and Retreats.",
-                    "Open a curated itinerary, edit it, and enquire on WhatsApp.",
-                  ].map((t, i) => (
-                    <li key={t} className="flex gap-3">
-                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand text-xs font-extrabold text-primary-foreground">
-                        {i + 1}
-                      </span>
-                      {t}
-                    </li>
-                  ))}
-                </ol>
+                <p className="text-sm font-bold">Pick a state</p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Tap any blue state on the map to see its experiences, events and retreats, with indicative
+                  starting prices.
+                </p>
               </div>
             )}
           </aside>
