@@ -72,8 +72,8 @@ function StatePage() {
   const [ask, setAsk] = useState(false);
 
   return (
-    <div className="min-h-dvh bg-background">
-      <SiteHeader className="relative" />
+    <div className="relative min-h-dvh bg-background">
+      <SiteHeader tone="ink" className="absolute inset-x-0 top-0" />
 
       {/* Hero */}
       <section className="on-ink relative isolate overflow-hidden bg-ink text-ink-foreground">
