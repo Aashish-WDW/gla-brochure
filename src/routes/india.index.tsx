@@ -1,4 +1,5 @@
 import { Reveal, SplitText } from "@/components/Reveal";
+import { BrowseCategories } from "@/components/BrowseCategories";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Maximize2, Minimize2, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -188,11 +189,11 @@ function IndiaPage() {
                       height={853}
                       className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <span className="chip chip-ink absolute left-3 top-3">{sum.total} listings</span>
                   </div>
                   <div className="p-5">
                     <h3 className="text-2xl">{region.name}</h3>
                     <p className="text-sm text-muted-foreground">{s.tagline}</p>
+                    <p className="mt-2 text-xs font-semibold text-muted-foreground">{sum.total} listings</p>
                     <div className="mt-4 flex items-center justify-between border-t pt-3 text-sm">
                       <span className="font-bold">{formatPrice(sum.from)}</span>
                       <ArrowRight className="size-4 text-brand transition-transform group-hover:translate-x-1" aria-hidden />
@@ -203,6 +204,7 @@ function IndiaPage() {
             ))}
           </ul>
         </section>
+        <BrowseCategories />
       </main>
 
       {/* Mobile / tablet: details open in a bottom sheet */}
