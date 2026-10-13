@@ -7,7 +7,6 @@ import { IndividualLink } from "@/components/IndividualLink";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StateSummary } from "@/components/StateSummary";
 import { STATES } from "@/data/content";
-import { REGIONS } from "@/data/regions";
 import { getRegion, stateSummary } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -48,7 +47,6 @@ function IndiaPage() {
   const isDesktop = useIsDesktop();
 
   const withContent = STATES.map((s) => ({ s, region: getRegion(s.id)!, sum: stateSummary(s.id) }));
-  const others = REGIONS.filter((r) => !STATES.some((s) => s.id === r.id));
 
   const viewMap = () => {
     if (full) {
@@ -64,7 +62,7 @@ function IndiaPage() {
 
   return (
     <div className="min-h-dvh bg-background">
-      <SiteHeader className="relative" showShare={false} />
+      <SiteHeader className="sticky top-0 z-30 bg-background/85 backdrop-blur-md" showShare={false} />
       <main className="mx-auto max-w-7xl px-4 pb-32 pt-8 sm:px-8 sm:pb-28">
         <div className="animate-fade-up max-w-2xl">
           <p className="eyebrow text-brand-deep">Step 1 · Choose a destination</p>
@@ -185,21 +183,6 @@ function IndiaPage() {
               </li>
             ))}
           </ul>
-
-          <details className="mt-10 rounded-2xl border p-5">
-            <summary className="cursor-pointer text-sm font-bold">
-              Other states &amp; territories — listings coming as they're verified ({others.length})
-            </summary>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {others.map((r) => (
-                <li key={r.id}>
-                  <button type="button" className="chip chip-outline min-h-9 px-3 hover:border-brand" onClick={() => setSelected(r.id)}>
-                    {r.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </details>
         </section>
       </main>
 
