@@ -188,7 +188,7 @@ function StatePage() {
                               key={l.id}
                               className={cn(c === "experience" && idx === 0 && list.length > 2 && "sm:col-span-2 lg:col-span-1")}
                             >
-                              <ListingCard listing={l} featured={c === "experience" && idx === 0} onOpen={setOpen} />
+                              <ListingCard listing={l} onOpen={setOpen} />
                             </li>
                           ))}
                         </ul>
