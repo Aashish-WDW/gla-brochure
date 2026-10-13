@@ -203,6 +203,16 @@ function IndiaPage() {
         </section>
       </main>
 
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t bg-background/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md sm:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+          <ModeSwitch />
+          <button type="button" className="btn btn-primary" onClick={viewMap}>
+            {full ? <Minimize2 className="size-4" aria-hidden /> : <MapIcon className="size-4" aria-hidden />}
+            {full ? "Exit full screen" : "View Map"}
+          </button>
+        </div>
+      </div>
+
       {/* Mobile / tablet: details open in a bottom sheet */}
       <Modal
         open={!!selected && !isDesktop}
