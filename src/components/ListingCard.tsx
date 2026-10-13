@@ -12,11 +12,9 @@ const AVAIL: Record<NonNullable<Listing["availability"]>, string> = {
 
 export function ListingCard({
   listing,
-  featured = false,
   onOpen,
 }: {
   listing: Listing;
-  featured?: boolean;
   onOpen: (l: Listing) => void;
 }) {
   const { mode } = useTrip();
@@ -29,7 +27,6 @@ export function ListingCard({
       onClick={() => onOpen(listing)}
       className={cn(
         "card-surface group flex h-full w-full flex-col overflow-hidden text-left",
-        featured && "sm:flex-row lg:flex-col",
         !suits && "opacity-75",
       )}
       aria-label={`${listing.title}, ${listing.location}. Open details`}
@@ -37,7 +34,7 @@ export function ListingCard({
       <div
         className={cn(
           "relative overflow-hidden bg-muted",
-          featured ? "aspect-[4/3] sm:aspect-auto sm:w-2/5 lg:aspect-[4/3] lg:w-full" : "aspect-[16/10]",
+          "aspect-[16/10]",
         )}
       >
         <img
@@ -64,7 +61,7 @@ export function ListingCard({
             </span>
           ))}
         </div>
-        <h3 className={cn("leading-tight", featured ? "text-2xl" : "text-xl")}>{listing.title}</h3>
+        <h3 className={cn("leading-tight", "text-xl")}>{listing.title}</h3>
         {isEvent && (
           <p className="flex items-center gap-1.5 text-sm font-semibold">
             <CalendarDays className="size-4 text-brand" aria-hidden />

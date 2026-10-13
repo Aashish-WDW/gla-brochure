@@ -178,17 +178,11 @@ function StatePage() {
                         </p>
                       ) : (
                         <ul
-                          className={cn(
-                            "grid gap-5",
-                            c === "experience" ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-3",
-                          )}
+                          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
                         >
-                          {list.map((l, idx) => (
-                            <li
-                              key={l.id}
-                              className={cn(c === "experience" && idx === 0 && list.length > 2 && "sm:col-span-2 lg:col-span-1")}
-                            >
-                              <ListingCard listing={l} featured={c === "experience" && idx === 0} onOpen={setOpen} />
+                          {list.map((l) => (
+                            <li key={l.id}>
+                              <ListingCard listing={l} onOpen={setOpen} />
                             </li>
                           ))}
                         </ul>
