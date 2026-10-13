@@ -102,7 +102,7 @@ function IndiaPage() {
                 <IndiaMap
                   selectedId={selected}
                   onSelect={setSelected}
-                  className={cn("mx-auto max-h-[78dvh] max-w-xl", full && "max-h-[66dvh]")}
+                  className={cn("mx-auto max-h-[60dvh] max-w-xl lg:max-h-[78dvh]", full && "max-h-[66dvh]")}
                 />
                 <div className="pointer-events-none absolute right-0 top-0 hidden max-w-[15rem] lg:block">
                   <div className="rounded-2xl border border-border/70 bg-background/92 p-3 shadow-sm backdrop-blur-sm">
@@ -135,12 +135,12 @@ function IndiaPage() {
                 </span>
               </div>
 
-              <div className="mt-4 border-t border-border/70 pt-4 lg:hidden">
+              <div className="mt-3 border-t border-border/70 pt-3 lg:hidden">
                 <p className="eyebrow text-brand-deep">How it works</p>
-                <ol className="mt-3 grid gap-3 sm:grid-cols-3">
+                <ol className="mt-2 grid gap-2 text-xs sm:grid-cols-3">
                   {HOW_IT_WORKS.map((t, i) => (
-                    <li key={t} className="flex gap-3 text-sm">
-                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand text-xs font-extrabold text-primary-foreground">
+                    <li key={t} className="flex gap-2">
+                      <span className="grid size-5 shrink-0 place-items-center rounded-full bg-brand text-[10px] font-extrabold text-primary-foreground">
                         {i + 1}
                       </span>
                       {t}
