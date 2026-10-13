@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Maximize2, Minimize2, X } from "lucide-react";
+import { ArrowRight, Map as MapIcon, Maximize2, Minimize2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { IndiaMap } from "@/components/IndiaMap";
 import { Modal } from "@/components/Modal";
+import { ModeSwitch } from "@/components/ModeSwitch";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StateSummary } from "@/components/StateSummary";
 import { STATES } from "@/data/content";
@@ -49,10 +50,22 @@ function IndiaPage() {
   const withContent = STATES.map((s) => ({ s, region: getRegion(s.id)!, sum: stateSummary(s.id) }));
   const others = REGIONS.filter((r) => !STATES.some((s) => s.id === r.id));
 
+  const viewMap = () => {
+    if (full) {
+      setFull(false);
+      return;
+    }
+    const el = document.getElementById("india-map");
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    el.focus({ preventScroll: true });
+  };
+
   return (
     <div className="min-h-dvh bg-background">
-      <SiteHeader className="sticky top-0" />
-      <main className="mx-auto max-w-7xl px-4 pb-20 pt-8 sm:px-8">
+      <SiteHeader className="sticky top-0" showMode={false} />
+      <main className="mx-auto max-w-7xl px-4 pb-32 pt-8 sm:px-8 sm:pb-28">
         <div className="animate-fade-up max-w-2xl">
           <p className="eyebrow text-brand-deep">Step 1 · Choose a destination</p>
           <h1 className="mt-2 text-5xl leading-[1.05] sm:text-6xl">Where in India?</h1>
@@ -65,7 +78,7 @@ function IndiaPage() {
         </div>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-          <section aria-label="India map">
+          <section id="india-map" aria-label="India map" tabIndex={-1} className="scroll-mt-24 outline-none">
             <div
               className={cn(
                 "relative rounded-3xl border bg-secondary p-3 sm:p-6",
@@ -189,6 +202,16 @@ function IndiaPage() {
           </details>
         </section>
       </main>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t bg-background/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md sm:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
+          <ModeSwitch />
+          <button type="button" className="btn btn-primary" onClick={viewMap}>
+            {full ? <Minimize2 className="size-4" aria-hidden /> : <MapIcon className="size-4" aria-hidden />}
+            {full ? "Exit full screen" : "View Map"}
+          </button>
+        </div>
+      </div>
 
       {/* Mobile / tablet: details open in a bottom sheet */}
       <Modal
