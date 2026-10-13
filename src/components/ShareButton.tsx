@@ -36,14 +36,15 @@ export function ShareButton({ tone = "light", className }: { tone?: "light" | "i
       type="button"
       onClick={share}
       className={cn(
-        "btn btn-sm shrink-0",
+        "btn btn-sm shrink-0 rounded-full px-2.5",
         tone === "ink" ? "btn-ghost-ink" : "btn-outline",
         className,
       )}
-      aria-label="Share this page"
+      aria-label={copied ? "Link copied" : "Share this page"}
+      title={copied ? "Link copied" : "Share"}
     >
       {copied ? <Check className="size-4" aria-hidden /> : <Share2 className="size-4" aria-hidden />}
-      <span aria-live="polite">{copied ? "Link copied" : "Share"}</span>
+      <span className="sr-only">{copied ? "Link copied" : "Share this page"}</span>
     </button>
   );
 }
