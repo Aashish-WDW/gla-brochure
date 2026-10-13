@@ -1,0 +1,204 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Maximize2, Minimize2, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { IndiaMap } from "@/components/IndiaMap";
+import { Modal } from "@/components/Modal";
+import { SiteHeader } from "@/components/SiteHeader";
+import { StateSummary } from "@/components/StateSummary";
+import { STATES } from "@/data/content";
+import { REGIONS } from "@/data/regions";
+import { getRegion, stateSummary } from "@/lib/catalog";
+import { formatPrice } from "@/lib/format";
+import { cn } from "@/lib/utils";
+
+export const Route = createFileRoute("/india/")({
+  head: () => ({
+    meta: [
+      { title: "Explore India by state — GoLookAround" },
+      {
+        name: "description",
+        content:
+          "Pick a state on the India map to see curated experiences, events and retreats, with indicative starting prices.",
+      },
+      { property: "og:title", content: "Explore India by state — GoLookAround" },
+      { property: "og:description", content: "An interactive India map of curated journeys, with a destination list alongside." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: IndiaPage,
+});
+
+function useIsDesktop() {
+  const [d, setD] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const on = () => setD(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  return d;
+}
+
+function IndiaPage() {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [full, setFull] = useState(false);
+  const isDesktop = useIsDesktop();
+
+  const withContent = STATES.map((s) => ({ s, region: getRegion(s.id)!, sum: stateSummary(s.id) }));
+  const others = REGIONS.filter((r) => !STATES.some((s) => s.id === r.id));
+
+  return (
+    <div className="min-h-dvh bg-background">
+      <SiteHeader className="sticky top-0" />
+      <main className="mx-auto max-w-7xl px-4 pb-20 pt-8 sm:px-8">
+        <div className="animate-fade-up max-w-2xl">
+          <p className="eyebrow text-brand-deep">Step 1 · Choose a destination</p>
+          <h1 className="mt-2 text-5xl leading-[1.05] sm:text-6xl">Where in India?</h1>
+          <p className="mt-3 text-lg text-muted-foreground">
+            Blue states have curated listings, with the number shown on the map. Select any state or use the list.
+          </p>
+          <a href="#destinations" className="mt-2 inline-block text-sm font-bold text-brand-deep underline-offset-4 hover:underline">
+            Skip map, jump to destination list
+          </a>
+        </div>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+          <section aria-label="India map">
+            <div
+              className={cn(
+                "relative rounded-3xl border bg-secondary p-3 sm:p-6",
+                full && "fixed inset-0 z-40 overflow-auto rounded-none border-0 bg-background p-4",
+              )}
+            >
+              <button
+                type="button"
+                className="btn btn-outline btn-sm absolute right-3 top-3 z-10 bg-background lg:hidden"
+                onClick={() => setFull((f) => !f)}
+                aria-pressed={full}
+              >
+                {full ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
+                {full ? "Exit full screen" : "Full-screen map"}
+              </button>
+              <IndiaMap
+                selectedId={selected}
+                onSelect={setSelected}
+                className={cn("mx-auto max-h-[78dvh] max-w-xl", full && "max-h-[88dvh]")}
+              />
+              <div className="mt-3 flex flex-wrap items-center gap-4 text-xs font-bold text-muted-foreground">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="size-3 rounded-sm bg-brand/80" /> Curated listings
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="size-3 rounded-sm bg-muted ring-1 ring-border" /> No verified listings yet
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="grid size-4 place-items-center rounded-full bg-ink-foreground text-[9px] font-extrabold text-ink ring-2 ring-brand-deep">
+                    n
+                  </span>
+                  Listing count
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <aside className="lg:sticky lg:top-24 lg:self-start" aria-live="polite">
+            {selected && isDesktop ? (
+              <div className="rounded-3xl border bg-card p-6 shadow-sm">
+                <div className="mb-4 flex justify-end">
+                  <button type="button" className="btn btn-outline btn-sm" onClick={() => setSelected(null)}>
+                    <X className="size-4" /> Clear
+                  </button>
+                </div>
+                <StateSummary stateId={selected} />
+              </div>
+            ) : (
+              <div className="rounded-3xl border bg-card p-6">
+                <p className="eyebrow text-brand-deep">How it works</p>
+                <ol className="mt-3 space-y-3 text-sm">
+                  {[
+                    "Select a state to see what's available and starting prices.",
+                    "Browse Experiences, Events and Retreats.",
+                    "Open a curated itinerary, edit it, and enquire on WhatsApp.",
+                  ].map((t, i) => (
+                    <li key={t} className="flex gap-3">
+                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand text-xs font-extrabold text-primary-foreground">
+                        {i + 1}
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+          </aside>
+        </div>
+
+        <section id="destinations" className="mt-14 scroll-mt-24" aria-labelledby="dest-heading">
+          <div className="flex items-end justify-between gap-4">
+            <h2 id="dest-heading" className="text-4xl">
+              Destinations with curated plans
+            </h2>
+          </div>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {withContent.map(({ s, region, sum }) => (
+              <li key={s.id}>
+                <Link
+                  to="/india/$stateId"
+                  params={{ stateId: s.id }}
+                  className="card-surface group block overflow-hidden"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <img
+                      src={s.image}
+                      alt={`${region.name} landscape`}
+                      loading="lazy"
+                      width={1280}
+                      height={853}
+                      className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <span className="chip chip-ink absolute left-3 top-3">{sum.total} listings</span>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-2xl">{region.name}</h3>
+                    <p className="text-sm text-muted-foreground">{s.tagline}</p>
+                    <div className="mt-4 flex items-center justify-between border-t pt-3 text-sm">
+                      <span className="font-bold">{formatPrice(sum.from)}</span>
+                      <ArrowRight className="size-4 text-brand transition-transform group-hover:translate-x-1" aria-hidden />
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          <details className="mt-10 rounded-2xl border p-5">
+            <summary className="cursor-pointer text-sm font-bold">
+              Other states &amp; territories — listings coming as they're verified ({others.length})
+            </summary>
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {others.map((r) => (
+                <li key={r.id}>
+                  <button type="button" className="chip chip-outline min-h-9 px-3 hover:border-brand" onClick={() => setSelected(r.id)}>
+                    {r.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </details>
+        </section>
+      </main>
+
+      {/* Mobile / tablet: details open in a bottom sheet */}
+      <Modal
+        open={!!selected && !isDesktop}
+        onOpenChange={(o) => !o && setSelected(null)}
+        title={selected ? (getRegion(selected)?.name ?? "") : ""}
+        description="Destination summary"
+      >
+        {selected && <StateSummary stateId={selected} />}
+      </Modal>
+    </div>
+  );
+}
