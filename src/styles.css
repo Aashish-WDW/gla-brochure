@@ -46,6 +46,7 @@
   --color-brand-deep: var(--brand-deep);
   --color-brand-soft: var(--brand-soft);
   --color-brand-glow: var(--brand-glow);
+  --color-brand-light: var(--brand-light);
 }
 
 :root {
@@ -56,6 +57,7 @@
   --brand-deep: oklch(0.488 0.243 264.4);
   --brand-soft: oklch(0.965 0.02 262);
   --brand-glow: oklch(0.546 0.215 262.9 / 35%);
+  --brand-light: oklch(0.78 0.13 262);
 
   --ink: oklch(0.145 0.02 265);
   --ink-soft: oklch(0.2 0.025 265);

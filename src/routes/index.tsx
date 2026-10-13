@@ -45,6 +45,10 @@ function Landing() {
 
   const goIndia = () => {
     if (diving) return;
+    if (fallback) {
+      navigate({ to: "/india" });
+      return;
+    }
     setDiving(true);
   };
 
@@ -78,7 +82,7 @@ function Landing() {
         <section className="order-2 animate-fade-up lg:order-1">
           <p className="eyebrow text-ink-muted">Interactive brochure &amp; playbook</p>
           <h1 className="mt-4 text-balance text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-            India, <em className="text-brand-glow-ink not-italic text-[oklch(0.78_0.14_262)]">curated</em> for the way you travel.
+            India, <em className="not-italic text-brand-light">curated</em> for the way you travel.
           </h1>
           <p className="mt-5 max-w-lg text-lg leading-relaxed text-ink-muted">
             Skip the endless tabs. Explore complete, thoughtfully planned journeys — experiences, events and
