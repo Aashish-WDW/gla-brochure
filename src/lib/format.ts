@@ -16,7 +16,7 @@ export const UNIT_LABEL: Record<PriceUnit, string> = {
 
 export function formatPrice(price: Price | null, prefix = "Starting from"): string {
   if (!price) return "Request a quote";
-  return `${prefix ? prefix + " " : ""}${formatINR(price.amount)} ${UNIT_LABEL[price.unit]}`;
+  return `${prefix ? prefix + " " : ""}${formatINR(price.amount)}`;
 }
 
 export function formatHours(h: number): string {

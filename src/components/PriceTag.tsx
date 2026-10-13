@@ -1,5 +1,5 @@
 import type { Price } from "@/data/types";
-import { formatINR, UNIT_LABEL } from "@/lib/format";
+import { formatINR } from "@/lib/format";
 
 export function PriceTag({ price, className }: { price: Price | null; className?: string }) {
   if (!price) {
@@ -14,8 +14,7 @@ export function PriceTag({ price, className }: { price: Price | null; className?
     <div className={className}>
       <p className="text-xs text-muted-foreground">Starting from</p>
       <p className="text-lg font-extrabold leading-tight">
-        {formatINR(price.amount)}{" "}
-        <span className="text-xs font-semibold text-muted-foreground">{UNIT_LABEL[price.unit]}</span>
+        {formatINR(price.amount)}
       </p>
     </div>
   );

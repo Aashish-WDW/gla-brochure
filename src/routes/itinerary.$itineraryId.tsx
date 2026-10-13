@@ -1,3 +1,4 @@
+import { SplitText } from "@/components/Reveal";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
 import { ItineraryEditor } from "@/components/ItineraryEditor";
@@ -52,7 +53,7 @@ function ItineraryPage() {
           alt={itinerary.title}
           width={1280}
           height={853}
-          className="absolute inset-0 -z-10 size-full object-cover opacity-60"
+          className="parallax absolute inset-0 -z-10 size-full object-cover opacity-60"
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/60 to-ink/20" />
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-20 sm:px-8 sm:pt-32">
@@ -70,7 +71,9 @@ function ItineraryPage() {
             </span>
           </nav>
           <p className="eyebrow text-brand-light">Curated itinerary · {itinerary.id}</p>
-          <h1 className="mt-2 max-w-3xl text-balance text-5xl leading-[1.02] sm:text-7xl">{itinerary.title}</h1>
+          <h1 className="mt-2 max-w-3xl text-balance text-5xl leading-[1.02] sm:text-7xl">
+            <SplitText text={itinerary.title} />
+          </h1>
           <p className="mt-3 max-w-2xl text-lg text-ink-muted">{itinerary.summary}</p>
           <p className="mt-2 text-sm font-semibold text-ink-muted">{itinerary.destination}</p>
         </div>
