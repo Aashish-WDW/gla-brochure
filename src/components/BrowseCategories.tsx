@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
-import { ACTIVITY_CATEGORIES, type ActivityCategory } from "@/data/activity-categories";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ACTIVITY_CATEGORIES, categoryHasSample, type ActivityCategory } from "@/data/activity-categories";
 import type { Listing } from "@/data/types";
 import { formatPrice } from "@/lib/format";
 import { startingPrice } from "@/lib/catalog";
@@ -9,6 +9,7 @@ import { Reveal, SplitText } from "./Reveal";
 import { Modal } from "./Modal";
 import { ListingCard } from "./ListingCard";
 import { ListingDialog } from "./ListingDialog";
+import { INDIVIDUAL_URL } from "./IndividualLink";
 
 export function BrowseCategories() {
   const [category, setCategory] = useState<ActivityCategory | null>(null);
@@ -17,6 +18,19 @@ export function BrowseCategories() {
   return (
     <section className="mt-14" aria-labelledby="category-heading">
       <h2 id="category-heading" className="text-4xl"><SplitText text="Browse by Category" /></h2>
+      <p className="mt-3 max-w-2xl text-muted-foreground">
+        The same categories as the GoLookAround website — on the land, in the air, under the
+        water, and the stories in between.
+      </p>
+      <a
+        href={INDIVIDUAL_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-2 inline-flex items-center gap-1.5 text-sm font-bold text-brand-deep underline-offset-4 hover:underline"
+      >
+        See these categories on golookaround.com
+        <ArrowUpRight className="size-4" aria-hidden />
+      </a>
       <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {ACTIVITY_CATEGORIES.map((item, index) => (
           <Reveal as="li" key={item.id} delay={(index % 3) * 110}>
@@ -38,7 +52,7 @@ export function BrowseCategories() {
         ))}
       </ul>
       <Modal open={!!category && !listing} onOpenChange={(open) => { if (!open) setCategory(null); }} title={category?.name ?? "Browse by Category"} description={category?.subtitle}>
-        {category?.id === "scuba-diving" && <p className="mb-4 text-sm text-muted-foreground">Sample curation · Availability and pricing on enquiry.</p>}
+        {category && categoryHasSample(category) && <p className="mb-4 text-sm text-muted-foreground">Sample curation · Availability and pricing on enquiry.</p>}
         <div className="grid gap-4 sm:grid-cols-2">
           {category?.listings.map((item) => <ListingCard key={item.id} listing={item} onOpen={setListing} />)}
         </div>
