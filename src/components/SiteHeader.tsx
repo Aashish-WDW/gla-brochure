@@ -19,7 +19,15 @@ export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
   );
 }
 
-export function SiteHeader({ tone = "light", className }: { tone?: "light" | "ink"; className?: string }) {
+export function SiteHeader({
+  tone = "light",
+  className,
+  showMode = true,
+}: {
+  tone?: "light" | "ink";
+  className?: string;
+  showMode?: boolean;
+}) {
   return (
     <header
       className={cn(
@@ -29,7 +37,7 @@ export function SiteHeader({ tone = "light", className }: { tone?: "light" | "in
       )}
     >
       <Logo tone={tone} />
-      <ModeSwitch tone={tone} />
+      {showMode && <ModeSwitch tone={tone} />}
     </header>
   );
 }

@@ -9,9 +9,9 @@
  */
 
 @theme inline {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-brand: "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-display: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -124,8 +124,8 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -334,4 +334,42 @@
 .map-state:focus-visible {
   stroke: var(--brand-deep);
   stroke-width: 2.5;
+}
+
+/* Paper-tear page transition */
+.paper-tear {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+.paper-tear__half {
+  position: absolute;
+  inset: 0;
+  background: var(--background);
+  box-shadow: 0 0 40px color-mix(in oklab, var(--foreground) 25%, transparent);
+  background-image: repeating-linear-gradient(
+    0deg,
+    color-mix(in oklab, var(--foreground) 3%, transparent) 0 2px,
+    transparent 2px 6px
+  );
+}
+.paper-tear__half--left {
+  clip-path: polygon(0 0, 52% 0, 48% 8%, 54% 16%, 47% 25%, 53% 34%, 46% 43%, 55% 52%, 48% 61%, 53% 70%, 46% 79%, 54% 88%, 49% 100%, 0 100%);
+  animation: tear-left 900ms cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+.paper-tear__half--right {
+  clip-path: polygon(52% 0, 100% 0, 100% 100%, 49% 100%, 54% 88%, 46% 79%, 53% 70%, 48% 61%, 55% 52%, 46% 43%, 53% 34%, 47% 25%, 54% 16%, 48% 8%);
+  animation: tear-right 900ms cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+@keyframes tear-left {
+  0%, 25% { transform: translateX(0) rotate(0); }
+  100% { transform: translateX(-75%) rotate(-6deg); opacity: 0.9; }
+}
+@keyframes tear-right {
+  0%, 25% { transform: translateX(0) rotate(0); }
+  100% { transform: translateX(75%) rotate(6deg); opacity: 0.9; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper-tear { display: none; }
 }

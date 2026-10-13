@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Lock, SkipForward } from "lucide-react";
+import { ArrowRight, SkipForward } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Globe } from "@/components/Globe";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -26,7 +26,6 @@ export const Route = createFileRoute("/")({
   component: Landing,
 });
 
-const COMING_SOON = ["Sri Lanka", "Nepal", "Thailand", "Japan", "UAE", "Indonesia"];
 
 function Landing() {
   const navigate = useNavigate();
@@ -35,7 +34,7 @@ function Landing() {
   const [settled, setSettled] = useState(false);
   const [skip, setSkip] = useState(0);
   const [diving, setDiving] = useState(false);
-  const [focus, setFocus] = useState<string | null>(null);
+  
   const [fallback, setFallback] = useState(false);
 
   useEffect(() => {
@@ -52,14 +51,6 @@ function Landing() {
     setDiving(true);
   };
 
-  const notice = focus
-    ? focus === "India"
-      ? "India — active. Select to explore."
-      : `${focus} — Coming Soon`
-    : settled
-      ? "Hover, tap or focus a country. Only India is open for now."
-      : "Finding India…";
-
   return (
     <div className="on-ink relative flex min-h-dvh flex-col overflow-hidden bg-ink text-ink-foreground">
       <div
@@ -71,11 +62,11 @@ function Landing() {
           opacity: 0.55,
         }}
       />
-      <SiteHeader tone="ink" className="relative" />
+      <SiteHeader tone="ink" className="relative" showMode={false} />
 
       <main
         className={cn(
-          "relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-6 px-5 pb-10 pt-2 transition-opacity duration-700 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10",
+          "relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-6 px-5 pb-32 pt-2 transition-opacity duration-700 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10",
           diving && "opacity-0",
         )}
       >
@@ -89,41 +80,11 @@ function Landing() {
             retreats — then shape one to fit you or your group.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button type="button" className="btn btn-primary btn-lg" onClick={goIndia}>
-              Explore India <ArrowRight className="size-5" aria-hidden />
+          {!settled && mounted && !reduced && (
+            <button type="button" className="btn btn-ghost-ink mt-8" onClick={() => setSkip((n) => n + 1)}>
+              <SkipForward className="size-4" aria-hidden /> Skip intro
             </button>
-            {!settled && mounted && !reduced && (
-              <button type="button" className="btn btn-ghost-ink btn-lg" onClick={() => setSkip((n) => n + 1)}>
-                <SkipForward className="size-4" aria-hidden /> Skip intro
-              </button>
-            )}
-          </div>
-
-          <p className="mt-6 min-h-6 text-sm font-semibold" role="status" aria-live="polite">
-            {notice}
-          </p>
-
-          <div className="mt-6">
-            <p className="eyebrow mb-3 text-ink-muted">Opening next</p>
-            <ul className="flex flex-wrap gap-2">
-              {COMING_SOON.map((c) => (
-                <li key={c}>
-                  <button
-                    type="button"
-                    aria-disabled="true"
-                    onClick={() => setFocus(c)}
-                    onFocus={() => setFocus(c)}
-                    onBlur={() => setFocus(null)}
-                    className="inline-flex min-h-9 cursor-not-allowed items-center gap-1.5 rounded-full border border-ink-foreground/15 px-3.5 text-xs font-bold text-ink-muted"
-                  >
-                    <Lock className="size-3" aria-hidden /> {c}
-                    <span className="sr-only"> — Coming Soon</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          )}
         </section>
 
         <section className="order-1 mx-auto w-full max-w-[min(100%,72dvh,46rem)] lg:order-2">
@@ -131,7 +92,7 @@ function Landing() {
             <div className="grid aspect-square place-items-center rounded-full bg-brand/20 p-8 text-center">
               <div>
                 <p className="font-display text-4xl">India</p>
-                <p className="mt-2 text-sm text-ink-muted">Interactive globe unavailable — use the button to continue.</p>
+                <p className="mt-2 text-sm text-ink-muted">Interactive globe unavailable — use the button below to continue.</p>
               </div>
             </div>
           ) : (
@@ -144,7 +105,7 @@ function Landing() {
                   onSettled={() => setSettled(true)}
                   onDived={() => navigate({ to: "/india" })}
                   onSelectIndia={goIndia}
-                  onFocusCountry={setFocus}
+                  onFocusCountry={() => {}}
                   onFallback={() => setFallback(true)}
                 />
               ) : (
@@ -154,6 +115,12 @@ function Landing() {
           )}
         </section>
       </main>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-6" style={{ background: "linear-gradient(to top, var(--ink), transparent)" }}>
+        <button type="button" className="btn btn-primary btn-lg mx-auto flex w-full max-w-md justify-center" onClick={goIndia}>
+          GoLookAround India <ArrowRight className="size-5" aria-hidden />
+        </button>
+      </div>
     </div>
   );
 }
