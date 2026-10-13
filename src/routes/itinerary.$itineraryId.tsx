@@ -44,7 +44,7 @@ function ItineraryPage() {
 
   return (
     <div className="min-h-dvh bg-background pb-24 lg:pb-0">
-      <SiteHeader className="sticky top-0" />
+      <SiteHeader className="relative" />
 
       <section className="on-ink relative isolate overflow-hidden bg-ink text-ink-foreground">
         <img

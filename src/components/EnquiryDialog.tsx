@@ -1,7 +1,6 @@
 import { Check, Copy, MessageCircle, Phone } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Modal } from "./Modal";
-import { ModeSwitch } from "./ModeSwitch";
 import { PartyControls } from "./PartyControls";
 import { useTrip } from "@/lib/trip";
 import { buildEnquiryMessage, buildWhatsAppUrl, WHATSAPP_DISPLAY, WHATSAPP_NUMBER } from "@/lib/whatsapp";
@@ -63,10 +62,7 @@ export function EnquiryDialog({ open, onOpenChange, context }: Props) {
           {context.destination && <p className="text-sm text-muted-foreground">{context.destination}</p>}
         </div>
 
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <ModeSwitch />
-          <PartyControls compact />
-        </div>
+        <PartyControls compact />
 
         <div>
           <label htmlFor="enq-date" className="mb-1.5 block text-xs font-bold text-muted-foreground">

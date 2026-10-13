@@ -1,18 +1,12 @@
 import { GROUP_TYPES, useTrip } from "@/lib/trip";
 import { Stepper } from "./Stepper";
 
-/** Party / group size controls that follow the Individual or Group mode. */
+/** Group size and group type controls. */
 export function PartyControls({ compact = false }: { compact?: boolean }) {
-  const { mode, travellers, setTravellers, groupSize, setGroupSize, groupType, setGroupType } = useTrip();
+  const { groupSize, setGroupSize, groupType, setGroupType } = useTrip();
   return (
     <div className={compact ? "flex flex-wrap items-center gap-3" : "flex flex-wrap items-end gap-5"}>
-      {mode === "individual" ? (
-        <div>
-          <p className="mb-1.5 text-xs font-bold text-muted-foreground">Travellers</p>
-          <Stepper label="Travellers" value={travellers} min={1} max={6} onChange={setTravellers} />
-        </div>
-      ) : (
-        <>
+      <>
           <div>
             <p className="mb-1.5 text-xs font-bold text-muted-foreground">Group size</p>
             <Stepper label="Group size" value={groupSize} min={6} max={200} onChange={setGroupSize} />
@@ -33,7 +27,6 @@ export function PartyControls({ compact = false }: { compact?: boolean }) {
             </select>
           </div>
         </>
-      )}
     </div>
   );
 }

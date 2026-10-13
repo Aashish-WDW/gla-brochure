@@ -5,8 +5,8 @@ import { peopleCount } from "./itinerary";
 export const GROUP_TYPES = ["Friends", "Family", "Community", "Corporate team"] as const;
 
 interface TripState {
+  /** GoLookAround India is group-only. */
   mode: Mode;
-  setMode: (m: Mode) => void;
   travellers: number;
   setTravellers: (n: number) => void;
   groupSize: number;
@@ -20,7 +20,7 @@ interface TripState {
 const TripContext = createContext<TripState | null>(null);
 
 export function TripProvider({ children }: { children: ReactNode }) {
-  const [mode, setMode] = useState<Mode>("individual");
+  const mode: Mode = "group";
   const [travellers, setTravellers] = useState(2);
   const [groupSize, setGroupSize] = useState(12);
   const [groupType, setGroupType] = useState<string>(GROUP_TYPES[0]);
@@ -28,7 +28,6 @@ export function TripProvider({ children }: { children: ReactNode }) {
   const value = useMemo<TripState>(
     () => ({
       mode,
-      setMode,
       travellers,
       setTravellers,
       groupSize,
@@ -37,7 +36,7 @@ export function TripProvider({ children }: { children: ReactNode }) {
       setGroupType,
       people: peopleCount(mode, travellers, groupSize),
     }),
-    [mode, travellers, groupSize, groupType],
+    [travellers, groupSize, groupType],
   );
 
   return <TripContext.Provider value={value}>{children}</TripContext.Provider>;
