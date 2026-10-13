@@ -56,7 +56,8 @@ function ItineraryPage() {
           className="parallax absolute inset-0 -z-10 size-full object-cover opacity-60"
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/60 to-ink/20" />
-        <div className="mx-auto max-w-7xl px-4 pb-10 pt-20 sm:px-8 sm:pt-32">
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-background via-background/80 to-transparent" />
+        <div className="mx-auto max-w-7xl px-4 pb-16 pt-20 sm:px-8 sm:pt-32">
           <nav aria-label="Breadcrumb" className="mb-4 flex flex-wrap items-center gap-1 text-sm font-semibold text-ink-muted">
             <Link to="/india" className="hover:text-ink-foreground">
               India
