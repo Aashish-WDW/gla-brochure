@@ -275,13 +275,13 @@
   /* Sticky bars float with a soft shadow instead of a hairline rule. */
   .shadow-below {
     box-shadow:
-      0 14px 30px -18px color-mix(in oklab, var(--foreground) 38%, transparent),
-      0 4px 10px -6px color-mix(in oklab, var(--foreground) 22%, transparent);
+      0 12px 26px -18px color-mix(in oklab, var(--foreground) 28%, transparent),
+      0 3px 8px -6px color-mix(in oklab, var(--foreground) 16%, transparent);
   }
   .shadow-above {
     box-shadow:
-      0 -14px 30px -18px color-mix(in oklab, var(--foreground) 38%, transparent),
-      0 -4px 10px -6px color-mix(in oklab, var(--foreground) 22%, transparent);
+      0 -12px 26px -18px color-mix(in oklab, var(--foreground) 28%, transparent),
+      0 -3px 8px -6px color-mix(in oklab, var(--foreground) 16%, transparent);
   }
 }
 
