@@ -108,8 +108,22 @@ function IndiaPage() {
                   <span className="grid size-4 place-items-center rounded-full bg-ink-foreground text-[9px] font-extrabold text-ink ring-2 ring-brand-deep">
                     n
                   </span>
-                  Listing count
+                Listing count
                 </span>
+              </div>
+
+              <div className="mt-4 border-t border-border/70 pt-4">
+                <p className="eyebrow text-brand-deep">How it works</p>
+                <ol className="mt-3 grid gap-3 sm:grid-cols-3">
+                  {HOW_IT_WORKS.map((t, i) => (
+                    <li key={t} className="flex gap-3 text-sm">
+                      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand text-xs font-extrabold text-primary-foreground">
+                        {i + 1}
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ol>
               </div>
             </div>
           </section>
