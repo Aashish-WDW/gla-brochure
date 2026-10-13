@@ -1,3 +1,4 @@
+import { Reveal, SplitText } from "@/components/Reveal";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Maximize2, Minimize2, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -59,7 +60,9 @@ function IndiaPage() {
       <main className="mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-8 sm:pb-14">
         <div className="animate-fade-up max-w-2xl">
           <p className="eyebrow text-brand-deep">Step 1 · Choose a destination</p>
-          <h1 className="mt-2 text-5xl leading-[1.05] sm:text-6xl">Where in India?</h1>
+          <h1 className="mt-2 text-5xl leading-[1.05] sm:text-6xl">
+            <SplitText text="Where in India?" />
+          </h1>
           <p className="mt-3 text-lg text-muted-foreground">
             Blue states have curated listings, with the number shown on the map. Select any state or use the list.
           </p>
@@ -69,7 +72,8 @@ function IndiaPage() {
         </div>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-          <section id="india-map" aria-label="India map" tabIndex={-1} className="scroll-mt-24 outline-none">
+          <Reveal as="section" className="scroll-mt-24 outline-none" delay={100}>
+          <section id="india-map" aria-label="India map" tabIndex={-1} className="outline-none">
             <div
               className={cn(
                 "relative rounded-3xl border bg-secondary p-3 sm:p-6",
@@ -137,6 +141,7 @@ function IndiaPage() {
               </div>
             </div>
           </section>
+          </Reveal>
 
           <aside className="lg:sticky lg:top-24 lg:self-start" aria-live="polite">
             {selected && isDesktop ? (
@@ -163,12 +168,12 @@ function IndiaPage() {
         <section id="destinations" className="mt-14 scroll-mt-24" aria-labelledby="dest-heading">
           <div className="flex items-end justify-between gap-4">
             <h2 id="dest-heading" className="text-4xl">
-              Destinations with curated plans
+              <SplitText text="Destinations with curated plans" />
             </h2>
           </div>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {withContent.map(({ s, region, sum }) => (
-              <li key={s.id}>
+            {withContent.map(({ s, region, sum }, idx) => (
+              <Reveal as="li" key={s.id} delay={(idx % 3) * 110}>
                 <Link
                   to="/india/$stateId"
                   params={{ stateId: s.id }}
@@ -194,7 +199,7 @@ function IndiaPage() {
                     </div>
                   </div>
                 </Link>
-              </li>
+              </Reveal>
             ))}
           </ul>
         </section>

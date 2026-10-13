@@ -1,3 +1,4 @@
+import { SplitText } from "@/components/Reveal";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, SkipForward } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -70,10 +71,10 @@ function Landing() {
           diving && "opacity-0",
         )}
       >
-        <section className="order-2 animate-fade-up lg:order-1">
+        <section className="stagger order-2 lg:order-1">
           <p className="eyebrow text-ink-muted">Interactive brochure &amp; playbook</p>
           <h1 className="mt-4 text-balance text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-            India, <em className="not-italic text-brand-gradient">curated</em> for the way you travel.
+            <SplitText text="India, curated for the way you travel." emphasis="curated" delay={150} />
           </h1>
           <p className="mt-5 max-w-lg text-lg leading-relaxed text-ink-muted">
             Skip the endless tabs. Explore complete, thoughtfully planned journeys — experiences, events and

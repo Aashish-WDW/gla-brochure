@@ -1,3 +1,4 @@
+import { Reveal, SplitText } from "@/components/Reveal";
 import * as Tabs from "@radix-ui/react-tabs";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { CalendarDays, ChevronRight, Compass, Leaf, MessageCircle, Sparkles } from "lucide-react";
@@ -83,7 +84,7 @@ function StatePage() {
             alt={`${region.name} landscape`}
             width={1280}
             height={853}
-            className="absolute inset-0 -z-10 size-full object-cover opacity-70"
+            className="parallax absolute inset-0 -z-10 size-full object-cover opacity-70"
           />
         )}
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/50 to-ink/20" />
@@ -97,10 +98,12 @@ function StatePage() {
               {region.name}
             </span>
           </nav>
-          <h1 className="text-6xl leading-none sm:text-8xl">{region.name}</h1>
-          {content && <p className="mt-3 max-w-xl text-xl text-ink-muted">{content.tagline}</p>}
+          <h1 className="text-6xl leading-none sm:text-8xl">
+            <SplitText text={region.name} />
+          </h1>
+          {content && <p className="animate-fade-up mt-3 max-w-xl text-xl text-ink-muted [animation-delay:0.35s]">{content.tagline}</p>}
           {content && (
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="animate-fade-up mt-6 flex flex-wrap gap-2 [animation-delay:0.5s]">
               <span className="chip">{formatPrice(sum.from)}</span>
               <span className="chip bg-ink-foreground/15 text-ink-foreground">
                 Best season: {content.bestSeason}
@@ -135,25 +138,27 @@ function StatePage() {
           </div>
         ) : (
           <>
-            <p className="rounded-2xl bg-brand-soft p-4 text-sm font-semibold text-brand-deep">
+            <Reveal as="p" className="rounded-2xl bg-brand-soft p-4 text-sm font-semibold text-brand-deep">
               {`Group experiences · pricing shown for ${people} people where per-group rates apply. Listings suited to groups appear first. Each experience, event, retreat or excursion has its own minimum group size, which may vary, so we confirm it when you enquire.`}
               <span className="mt-2 block">
                 <IndividualLink />
               </span>
-            </p>
+            </Reveal>
 
             {itineraries.length > 0 && (
               <section className="mt-12" aria-labelledby="itins">
                 <p className="eyebrow text-brand-deep">The playbook</p>
                 <h2 id="itins" className="mt-1 text-4xl">
-                  Complete curated itineraries
+                  <SplitText text="Complete curated itineraries" />
                 </h2>
                 <p className="mt-2 max-w-2xl text-muted-foreground">
                   A coherent plan from first stop to last — and every piece of it can be edited.
                 </p>
                 <div className="mt-6 grid gap-5">
                   {itineraries.map((i) => (
-                    <ItineraryCard key={i.id} itinerary={i} />
+                    <Reveal key={i.id}>
+                      <ItineraryCard itinerary={i} />
+                    </Reveal>
                   ))}
                 </div>
               </section>
@@ -162,7 +167,7 @@ function StatePage() {
             <Tabs.Root value={tab} onValueChange={(v) => setTab(v as Category)}>
             <section className="mt-16 scroll-mt-24" aria-labelledby="browse">
               <h2 id="browse" className="text-4xl">
-                {CATEGORY_LABEL[tab]}
+                <SplitText key={tab} text={CATEGORY_LABEL[tab]} />
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Use the tabs at the bottom of the screen to switch between experiences, events and retreats.
@@ -180,10 +185,10 @@ function StatePage() {
                         <ul
                           className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
                         >
-                          {list.map((l) => (
-                            <li key={l.id}>
+                          {list.map((l, idx) => (
+                            <Reveal as="li" key={l.id} delay={(idx % 3) * 110}>
                               <ListingCard listing={l} onOpen={setOpen} />
-                            </li>
+                            </Reveal>
                           ))}
                         </ul>
                       )}
