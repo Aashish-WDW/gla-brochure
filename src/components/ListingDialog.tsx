@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { Listing } from "@/data/types";
 import { getRegion } from "@/lib/catalog";
 import { EnquiryDialog } from "./EnquiryDialog";
+import { IndividualLink } from "./IndividualLink";
 import { Modal } from "./Modal";
 import { PriceTag } from "./PriceTag";
 
@@ -74,6 +75,7 @@ export function ListingDialog({ listing, onClose }: { listing: Listing | null; o
             <button type="button" className="btn btn-primary btn-lg w-full" onClick={() => setEnquire(true)}>
               <MessageCircle className="size-5" aria-hidden /> Enquire on WhatsApp
             </button>
+            <IndividualLink />
           </div>
         )}
       </Modal>

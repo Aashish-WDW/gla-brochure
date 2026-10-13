@@ -82,7 +82,7 @@ export function ListingCard({
         )}
         {!suits && (
           <p className="text-xs font-bold text-muted-foreground">
-            Better suited to {mode === "group" ? "individuals" : "groups"}
+            Individual experience — find it on golookaround.com
           </p>
         )}
         <div className="mt-auto flex items-end justify-between border-t pt-4">

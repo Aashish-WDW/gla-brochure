@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import logoAsset from "@/assets/golookaround-logo.png.asset.json";
-import { ModeSwitch } from "./ModeSwitch";
 import { cn } from "@/lib/utils";
 
 export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
@@ -22,22 +21,19 @@ export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
 export function SiteHeader({
   tone = "light",
   className,
-  showMode = true,
 }: {
   tone?: "light" | "ink";
   className?: string;
-  showMode?: boolean;
 }) {
   return (
     <header
       className={cn(
         "z-30 flex items-center justify-between gap-3 px-4 py-3 sm:px-8 sm:py-4",
-        tone === "ink" ? "on-ink" : "shadow-below bg-background/85 backdrop-blur-md",
+        tone === "ink" && "on-ink",
         className,
       )}
     >
       <Logo tone={tone} />
-      {showMode && <ModeSwitch tone={tone} />}
     </header>
   );
 }

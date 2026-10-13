@@ -36,7 +36,7 @@ import { useTrip } from "@/lib/trip";
 import { cn } from "@/lib/utils";
 import { EnquiryDialog } from "./EnquiryDialog";
 import { Modal } from "./Modal";
-import { ModeSwitch } from "./ModeSwitch";
+import { IndividualLink } from "./IndividualLink";
 import { PartyControls } from "./PartyControls";
 
 const KIND_ICON: Record<StopKind, typeof Mountain> = {
@@ -114,7 +114,6 @@ export function ItineraryEditor({ itinerary }: { itinerary: Itinerary }) {
       </div>
 
       <div className="space-y-3">
-        <ModeSwitch />
         <PartyControls compact />
       </div>
 
@@ -130,6 +129,7 @@ export function ItineraryEditor({ itinerary }: { itinerary: Itinerary }) {
       <p className="text-xs text-muted-foreground">
         Prices may vary with season, dates, group size and availability. This is not a booking.
       </p>
+      <IndividualLink short />
       {mode === "group" && (
         <p className="text-xs font-semibold text-brand-deep">
           Group bookings have a minimum number of people that can vary for each experience, event, retreat or excursion
@@ -145,8 +145,7 @@ export function ItineraryEditor({ itinerary }: { itinerary: Itinerary }) {
         <div>
           {!suits && (
             <p className="mb-6 rounded-2xl border p-4 text-sm font-semibold">
-              This plan was designed for {mode === "group" ? "individuals" : "groups"}. You can still enquire and ask
-              the team to adapt it.
+              This plan was designed for individuals. You can still enquire and ask the team to adapt it for your group.
             </p>
           )}
 

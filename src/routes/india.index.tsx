@@ -3,7 +3,7 @@ import { ArrowRight, Map as MapIcon, Maximize2, Minimize2, X } from "lucide-reac
 import { useEffect, useState } from "react";
 import { IndiaMap } from "@/components/IndiaMap";
 import { Modal } from "@/components/Modal";
-import { ModeSwitch } from "@/components/ModeSwitch";
+import { IndividualLink } from "@/components/IndividualLink";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StateSummary } from "@/components/StateSummary";
 import { STATES } from "@/data/content";
@@ -64,7 +64,7 @@ function IndiaPage() {
 
   return (
     <div className="min-h-dvh bg-background">
-      <SiteHeader className="sticky top-0" showMode={false} />
+      <SiteHeader className="relative" />
       <main className="mx-auto max-w-7xl px-4 pb-32 pt-8 sm:px-8 sm:pb-28">
         <div className="animate-fade-up max-w-2xl">
           <p className="eyebrow text-brand-deep">Step 1 · Choose a destination</p>
@@ -205,7 +205,7 @@ function IndiaPage() {
 
       <div className="shadow-above fixed inset-x-0 bottom-0 z-40 bg-background/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md sm:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          <ModeSwitch />
+          <IndividualLink short />
           <button type="button" className="btn btn-primary" onClick={viewMap}>
             {full ? <Minimize2 className="size-4" aria-hidden /> : <MapIcon className="size-4" aria-hidden />}
             {full ? "Exit full screen" : "View Map"}

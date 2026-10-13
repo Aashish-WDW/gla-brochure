@@ -62,7 +62,7 @@ function Landing() {
           opacity: 0.55,
         }}
       />
-      <SiteHeader tone="ink" className="relative" showMode={false} />
+      <SiteHeader tone="ink" className="relative" />
 
       <main
         className={cn(

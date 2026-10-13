@@ -7,6 +7,7 @@ import { ItineraryCard } from "@/components/ItineraryCard";
 import { ListingCard } from "@/components/ListingCard";
 import { ListingDialog } from "@/components/ListingDialog";
 import { SiteHeader } from "@/components/SiteHeader";
+import { IndividualLink } from "@/components/IndividualLink";
 import type { Category, Listing } from "@/data/types";
 import {
   CATEGORY_LABEL,
@@ -72,7 +73,7 @@ function StatePage() {
 
   return (
     <div className="min-h-dvh bg-background">
-      <SiteHeader className="sticky top-0" />
+      <SiteHeader className="relative" />
 
       {/* Hero */}
       <section className="on-ink relative isolate overflow-hidden bg-ink text-ink-foreground">
@@ -135,9 +136,10 @@ function StatePage() {
         ) : (
           <>
             <p className="rounded-2xl bg-brand-soft p-4 text-sm font-semibold text-brand-deep">
-              {mode === "group"
-                ? `Group view · pricing shown for ${people} people where per-group rates apply. Listings suited to groups appear first. Each experience, event, retreat or excursion has its own minimum group size, which may vary, so we confirm it when you enquire.`
-                : `Individual view · prices shown per person. Listings suited to individuals and small parties appear first.`}
+              {`Group experiences · pricing shown for ${people} people where per-group rates apply. Listings suited to groups appear first. Each experience, event, retreat or excursion has its own minimum group size, which may vary, so we confirm it when you enquire.`}
+              <span className="mt-2 block">
+                <IndividualLink />
+              </span>
             </p>
 
             {itineraries.length > 0 && (
