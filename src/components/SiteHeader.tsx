@@ -22,9 +22,11 @@ export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
 export function SiteHeader({
   tone = "light",
   className,
+  showShare = true,
 }: {
   tone?: "light" | "ink";
   className?: string;
+  showShare?: boolean;
 }) {
   return (
     <header
@@ -35,7 +37,7 @@ export function SiteHeader({
       )}
     >
       <Logo tone={tone} />
-      <ShareButton tone={tone} />
+      {showShare && <ShareButton tone={tone} />}
     </header>
   );
 }
