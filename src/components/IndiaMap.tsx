@@ -81,14 +81,14 @@ export function IndiaMap({ selectedId, onSelect, className }: Props) {
             aria-pressed={selected}
             aria-label={`${name}${has ? `, ${count} listings` : ", no verified listings yet"}`}
             className={cn(
-              "map-state stroke-background",
+              "map-state",
               selected
                 ? "fill-brand-deep"
                 : has
                   ? "fill-brand/80 hover:fill-brand-deep"
                   : "fill-muted hover:fill-border",
             )}
-            strokeWidth={1}
+            strokeWidth={1.25}
             strokeLinejoin="round"
             onClick={() => onSelect(id)}
             onKeyDown={(e) => {
