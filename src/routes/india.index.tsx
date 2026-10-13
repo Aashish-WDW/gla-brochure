@@ -7,7 +7,6 @@ import { IndividualLink } from "@/components/IndividualLink";
 import { SiteHeader } from "@/components/SiteHeader";
 import { StateSummary } from "@/components/StateSummary";
 import { STATES } from "@/data/content";
-import { REGIONS } from "@/data/regions";
 import { getRegion, stateSummary } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -48,7 +47,6 @@ function IndiaPage() {
   const isDesktop = useIsDesktop();
 
   const withContent = STATES.map((s) => ({ s, region: getRegion(s.id)!, sum: stateSummary(s.id) }));
-  const others = REGIONS.filter((r) => !STATES.some((s) => s.id === r.id));
 
   const viewMap = () => {
     if (full) {
@@ -64,7 +62,7 @@ function IndiaPage() {
 
   return (
     <div className="min-h-dvh bg-background">
-      <SiteHeader className="relative" showShare={false} />
+      <SiteHeader className="sticky top-0 z-30 bg-background/85 backdrop-blur-md" showShare={false} />
       <main className="mx-auto max-w-7xl px-4 pb-32 pt-8 sm:px-8 sm:pb-28">
         <div className="animate-fade-up max-w-2xl">
           <p className="eyebrow text-brand-deep">Step 1 · Choose a destination</p>
