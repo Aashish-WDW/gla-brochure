@@ -1,4 +1,4 @@
-import { geoContains, geoGraticule10, geoOrthographic, geoPath } from "d3-geo";
+import { geoArea, geoContains, geoGraticule10, geoOrthographic, geoPath } from "d3-geo";
 import type { GeoPermissibleObjects } from "d3-geo";
 import type { Feature, FeatureCollection } from "geojson";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -58,12 +58,37 @@ export function Globe({
   // Load geometry lazily so the landing shell paints first.
   useEffect(() => {
     let live = true;
-    import("world-atlas/countries-110m.json")
-      .then((mod) => {
+    Promise.all([import("world-atlas/countries-110m.json"), import("@/data/india-states.json")])
+      .then(([mod, indiaMod]) => {
         if (!live) return;
         const topo = (mod.default ?? mod) as unknown as Topology;
         const fc = feature(topo, topo.objects["countries"]!) as unknown as FeatureCollection;
-        setCountries(fc.features as Country[]);
+        const states = ((indiaMod.default ?? indiaMod) as unknown as FeatureCollection).features;
+        // Use the full official outline of India (incl. Jammu & Kashmir and Ladakh)
+        // instead of the simplified world-atlas shape.
+        const polys: number[][][][] = [];
+        for (const s of states) {
+          const g = s.geometry;
+          if (g.type === "Polygon") polys.push(g.coordinates as number[][][]);
+          else if (g.type === "MultiPolygon") polys.push(...(g.coordinates as number[][][][]));
+        }
+        const fixed = polys.map((rings) =>
+          rings.map((ring, i) => {
+            // d3 spherical geometry needs exterior rings clockwise; fix winding per ring.
+            const area = geoArea({ type: "Polygon", coordinates: [ring] } as GeoPermissibleObjects);
+            const wrong = i === 0 ? area > 2 * Math.PI : area < 2 * Math.PI;
+            return wrong ? [...ring].reverse() : ring;
+          }),
+        );
+        const india: Country = {
+          type: "Feature",
+          id: INDIA_ID,
+          properties: { name: "India" },
+          geometry: { type: "MultiPolygon", coordinates: fixed },
+        };
+        const list = (fc.features as Country[]).filter((f) => f.id !== INDIA_ID);
+        list.push(india);
+        setCountries(list);
       })
       .catch(() => live && onFallback());
     return () => {

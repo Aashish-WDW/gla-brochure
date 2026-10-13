@@ -325,6 +325,7 @@
 }
 
 .map-state {
+  stroke: oklch(0.52 0.03 262);
   transition:
     fill 0.2s ease,
     stroke 0.2s ease;
