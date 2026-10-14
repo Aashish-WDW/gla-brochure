@@ -33,12 +33,12 @@ function Clock() {
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="hidden rounded-2xl bg-card px-4 py-2 shadow-sm ring-1 ring-border/60 sm:block">
-      <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground">
-        {now ? now.toLocaleDateString("en-IN", { weekday: "short", month: "short", day: "numeric" }) : "—"}
+    <div className="hidden h-12 flex-col justify-center rounded-2xl border border-[#e7e5ed] bg-white px-[14px] sm:flex">
+      <p className="text-[10px] font-semibold uppercase leading-[15px] tracking-[0.1em] text-[#9190a3]">
+        {now ? now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) : "—"}
       </p>
-      <p className="text-sm font-bold tabular-nums">
-        {now ? now.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "--:--:--"}
+      <p className="text-sm font-semibold leading-[21px] tabular-nums text-[#101020]">
+        {now ? now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).toLowerCase() : "--:--:-- --"}
       </p>
     </div>
   );
@@ -98,16 +98,16 @@ function PortalLayout() {
         </div>
       </aside>
       <div className="min-w-0">
-        <header className="flex items-center justify-between gap-4 px-5 pt-6 sm:px-10">
+        <header className="flex h-[85px] items-center justify-between gap-4 border-b border-[#eff1f7] bg-[linear-gradient(90deg,#f4f6fa_0%,#f4f6fa_55%,#f5f3fb_72%)] px-5 sm:px-8">
           <div>
-            <p className="text-sm font-medium text-muted-foreground">B2B Portal</p>
-            <h1 className="text-2xl font-bold">{TITLES[path] ?? "Portal"}</h1>
+            <p className="text-xs font-medium leading-[18px] text-[#9192a4]">B2B Portal</p>
+            <h1 className="text-xl font-bold leading-7 text-[#0c0e1b]">{TITLES[path] ?? "Portal"}</h1>
           </div>
           <div className="flex items-center gap-4">
-            <label className="hidden w-72 items-center gap-3 rounded-2xl bg-card px-4 py-3 shadow-sm ring-1 ring-border/60 md:flex">
-              <Search className="size-4 text-muted-foreground" />
-              <input placeholder="Search anything..." className="flex-1 bg-transparent text-sm outline-none" />
-              <kbd className="rounded-md px-1.5 py-0.5 text-[10px] text-muted-foreground ring-1 ring-border">⌘K</kbd>
+            <label className="hidden h-[45px] w-[246px] items-center gap-3 rounded-2xl border border-[#e6e8ef] bg-white pl-3 pr-2 md:flex">
+              <Search className="size-[14px] shrink-0 text-[#9392a5]" strokeWidth={1.75} />
+              <input placeholder="Search anything..." className="min-w-0 flex-1 bg-transparent text-sm font-normal text-[#101020] outline-none placeholder:text-[#86858f]" />
+              <kbd className="grid h-[23px] w-[34px] shrink-0 place-items-center rounded-lg border border-[#e6e5ee] bg-white font-[Poppins,sans-serif] text-[11px] font-semibold text-[#9695a5]">⌘K</kbd>
             </label>
             <Clock />
           </div>
