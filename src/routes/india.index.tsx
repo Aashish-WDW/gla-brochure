@@ -12,6 +12,7 @@ import { STATES } from "@/data/content";
 import { getRegion, stateSummary } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { useCms } from "@/lib/cms";
 
 export const Route = createFileRoute("/india/")({
   head: () => ({
@@ -61,7 +62,8 @@ function IndiaPage() {
     if (isDesktop) setFull(false);
   }, [isDesktop]);
 
-  const withContent = STATES.map((s) => ({ s, region: getRegion(s.id)!, sum: stateSummary(s.id) }));
+  const cms = useCms();
+  const withContent = STATES.filter((s) => cms.enabledStates[s.id] !== false).map((s) => ({ s, region: getRegion(s.id)!, sum: stateSummary(s.id) }));
 
   return (
     <div className="min-h-dvh bg-background">

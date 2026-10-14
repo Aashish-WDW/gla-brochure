@@ -3,10 +3,10 @@ import { cn } from "@/lib/utils";
 
 export function PageHead({ title, sub, action }: { title: string; sub: string; action?: ReactNode }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4">
+    <div className="flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="text-3xl sm:text-4xl">{title}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">{sub}</p>
+        <h2 className="text-3xl font-bold">{title}</h2>
+        <p className="mt-1.5 text-[17px] text-muted-foreground">{sub}</p>
       </div>
       {action}
     </div>
@@ -14,8 +14,11 @@ export function PageHead({ title, sub, action }: { title: string; sub: string; a
 }
 
 export function Panel({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cn("rounded-3xl bg-card p-5 shadow-sm sm:p-6", className)}>{children}</div>;
+  return <div className={cn("rounded-3xl bg-card p-6 shadow-sm ring-1 ring-border/60 sm:p-8", className)}>{children}</div>;
 }
+
+export const primaryBtn =
+  "inline-flex items-center gap-2 rounded-2xl bg-brand px-6 py-3.5 text-[17px] font-semibold text-primary-foreground shadow-lg shadow-brand/30 hover:bg-brand-deep";
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -27,7 +30,7 @@ export function Field({ label, children }: { label: string; children: ReactNode 
 }
 
 export const inputCls =
-  "w-full rounded-xl border bg-background px-3 py-2.5 text-sm font-normal outline-none focus:ring-2 focus:ring-brand";
+  "w-full rounded-xl bg-background px-3 py-2.5 text-sm font-normal outline-none ring-1 ring-border focus:ring-2 focus:ring-brand";
 
 export function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
