@@ -34,7 +34,7 @@ function Clock() {
   }, []);
   return (
     <div className="hidden h-12 w-[104px] flex-col justify-center rounded-2xl border border-[#e7e5ed] bg-white pl-[14px] sm:flex">
-      <p className="relative top-[1.5px] text-[8px] font-semibold uppercase leading-[15px] tracking-[0.1em] text-[#9190a3]">
+      <p className="relative top-[1.5px] text-[8.5px] font-semibold uppercase leading-[15px] tracking-[0.1em] text-[#9190a3]">
         {now ? now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) : "—"}
       </p>
       <p className="text-[13px] font-semibold leading-[21px] text-[#101020]">
