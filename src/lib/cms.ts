@@ -15,6 +15,28 @@ export interface Destination {
   image?: string;
 }
 
+export type StopKind = "experience" | "stay";
+
+/** One stop on a day of a curation's itinerary (an experience or an overnight stay). */
+export interface CurationStop {
+  id: string;
+  kind: StopKind;
+  title: string;
+  description: string;
+  location: string;
+  /** "HH:MM" — experiences only. Duration is derived from start/end. */
+  start: string;
+  end: string;
+  /** null = "Request a quote" — never invent prices. */
+  pricePerPerson: number | null;
+  image?: string;
+}
+
+export interface CurationDay {
+  id: string;
+  stops: CurationStop[];
+}
+
 export interface Curation {
   id: string;
   title: string;
@@ -25,6 +47,8 @@ export interface Curation {
   price: number | null;
   minGroup: number | null;
   description: string;
+  /** Day-by-day itinerary. Missing on curations saved before itineraries existed. */
+  days?: CurationDay[];
   status: CurationStatus;
   updatedAt: string;
 }
