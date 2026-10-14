@@ -34,10 +34,10 @@ function Clock() {
   }, []);
   return (
     <div className="hidden h-12 flex-col justify-center rounded-2xl border border-[#e7e5ed] bg-white px-[14px] sm:flex">
-      <p className="text-[10px] font-semibold uppercase leading-[15px] tracking-[0.1em] text-[#9190a3]">
+      <p className="text-[9px] font-semibold uppercase leading-[15px] tracking-[0.1em] text-[#9190a3]">
         {now ? now.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) : "—"}
       </p>
-      <p className="text-sm font-semibold leading-[21px] tabular-nums text-[#101020]">
+      <p className="text-[13px] font-semibold leading-[21px] text-[#101020]">
         {now ? now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).toLowerCase() : "--:--:-- --"}
       </p>
     </div>
@@ -101,7 +101,7 @@ function PortalLayout() {
         <header className="flex h-[85px] items-center justify-between gap-4 border-b border-[#eff1f7] bg-[linear-gradient(90deg,#f4f6fa_0%,#f4f6fa_55%,#f5f3fb_72%)] px-5 sm:px-8">
           <div>
             <p className="text-xs font-medium leading-[18px] text-[#9192a4]">B2B Portal</p>
-            <h1 className="text-xl font-bold leading-7 text-[#0c0e1b]">{TITLES[path] ?? "Portal"}</h1>
+            <h1 className="text-[20.8px] font-bold leading-7 text-[#0c0e1b]">{TITLES[path] ?? "Portal"}</h1>
           </div>
           <div className="flex items-center gap-4">
             <label className="hidden h-[45px] w-[246px] items-center gap-3 rounded-2xl border border-[#e6e8ef] bg-white pl-3 pr-2 md:flex">
