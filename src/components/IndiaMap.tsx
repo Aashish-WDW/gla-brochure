@@ -13,9 +13,11 @@ interface Props {
   selectedId: string | null;
   onSelect: (id: string) => void;
   className?: string;
+  /** Portal mode: colour by enabled set and hide listing counts. */
+  activeIds?: Set<string>;
 }
 
-export function IndiaMap({ selectedId, onSelect, className }: Props) {
+export function IndiaMap({ selectedId, onSelect, className, activeIds }: Props) {
   const [features, setFeatures] = useState<StateFeature[] | null>(null);
   const [error, setError] = useState(false);
 
@@ -71,7 +73,7 @@ export function IndiaMap({ selectedId, onSelect, className }: Props) {
       {shapes.map(({ f, d, count }) => {
         const { id, name } = f.properties;
         const selected = selectedId === id;
-        const has = count > 0;
+        const has = activeIds ? activeIds.has(id) : count > 0;
         return (
           <path
             key={id}
@@ -79,7 +81,7 @@ export function IndiaMap({ selectedId, onSelect, className }: Props) {
             role="button"
             tabIndex={0}
             aria-pressed={selected}
-            aria-label={`${name}${has ? `, ${count} listings` : ", no verified listings yet"}`}
+            aria-label={activeIds ? `${name}, ${has ? "enabled" : "disabled"}` : `${name}${has ? `, ${count} listings` : ", no verified listings yet"}`}
             className={cn(
               "map-state",
               selected
@@ -104,7 +106,7 @@ export function IndiaMap({ selectedId, onSelect, className }: Props) {
       })}
       {/* Count markers — only where real (mock) content exists. */}
       {shapes
-        .filter((s) => s.count > 0)
+        .filter((s) => !activeIds && s.count > 0)
         .map(({ f, centroid, count }) => (
           <g key={f.properties.id} transform={`translate(${centroid[0]} ${centroid[1]})`} className="pointer-events-none">
             <circle r={13} className="fill-ink-foreground stroke-brand-deep" strokeWidth={2} />

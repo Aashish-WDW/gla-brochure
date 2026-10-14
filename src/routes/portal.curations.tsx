@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Modal } from "@/components/Modal";
-import { Field, inputCls, PageHead, Panel, primaryBtn } from "@/components/portal/ui";
+import { Field, inputCls, PageHead, Panel, primaryBtn, Select } from "@/components/portal/ui";
 import { REGIONS } from "@/data/regions";
 import { getRegion } from "@/lib/catalog";
 import { type Curation, setCms, uid, useCms } from "@/lib/cms";
@@ -81,25 +81,21 @@ function CurationsPage() {
             <Field label="Title"><input required className={inputCls} value={edit.title} onChange={(e) => setEdit({ ...edit, title: e.target.value })} /></Field>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="State">
-                <select className={inputCls} value={edit.stateId} onChange={(e) => setEdit({ ...edit, stateId: e.target.value, destinationId: null })}>
-                  {enabled.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
-                </select>
+                <Select label="State" value={edit.stateId} onChange={(v) => setEdit({ ...edit, stateId: v, destinationId: null })} options={enabled.map((r) => ({ value: r.id, label: r.name }))} />
               </Field>
               <Field label="Destination">
-                <select className={inputCls} value={edit.destinationId ?? ""} onChange={(e) => setEdit({ ...edit, destinationId: e.target.value || null })}>
-                  <option value="">—</option>
-                  {cms.destinations.filter((d) => d.stateId === edit.stateId).map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
-                </select>
+                <Select
+                  label="Destination"
+                  value={edit.destinationId ?? ""}
+                  onChange={(v) => setEdit({ ...edit, destinationId: v || null })}
+                  options={[{ value: "", label: "No specific destination" }, ...cms.destinations.filter((d) => d.stateId === edit.stateId).map((d) => ({ value: d.id, label: d.name }))]}
+                />
               </Field>
               <Field label="Category">
-                <select className={inputCls} value={edit.category} onChange={(e) => setEdit({ ...edit, category: e.target.value as Curation["category"] })}>
-                  <option value="experience">Experience</option><option value="event">Event</option><option value="retreat">Retreat</option>
-                </select>
+                <Select label="Category" value={edit.category} onChange={(v) => setEdit({ ...edit, category: v as Curation["category"] })} options={[{ value: "experience", label: "Experience" }, { value: "event", label: "Event" }, { value: "retreat", label: "Retreat" }]} />
               </Field>
               <Field label="Status">
-                <select className={inputCls} value={edit.status} onChange={(e) => setEdit({ ...edit, status: e.target.value as Curation["status"] })}>
-                  <option value="draft">Draft</option><option value="published">Published</option>
-                </select>
+                <Select label="Status" value={edit.status} onChange={(v) => setEdit({ ...edit, status: v as Curation["status"] })} options={[{ value: "draft", label: "Draft" }, { value: "published", label: "Published" }]} />
               </Field>
               <Field label="Price per person (₹, blank = Request a quote)"><input type="number" min={0} className={inputCls} value={edit.price ?? ""} onChange={(e) => setEdit({ ...edit, price: num(e.target.value) })} /></Field>
               <Field label="Minimum group size"><input type="number" min={1} className={inputCls} value={edit.minGroup ?? ""} onChange={(e) => setEdit({ ...edit, minGroup: num(e.target.value) })} /></Field>
