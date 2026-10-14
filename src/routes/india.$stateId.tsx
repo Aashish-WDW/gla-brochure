@@ -36,7 +36,7 @@ export const Route = createFileRoute("/india/$stateId")({
         { title: `${name} — curated experiences, events & retreats | GoLookAround` },
         {
           name: "description",
-          content: `Browse curated experiences, events and retreats in ${name}, with indicative starting prices and sample itineraries.`,
+          content: `Browse curated experiences, events and retreats in ${name}, with indicative starting prices and sample curations.`,
         },
         { property: "og:title", content: `${name} — GoLookAround` },
         { property: "og:description", content: `Curated plans and indicative prices for ${name}.` },
@@ -88,8 +88,7 @@ function StatePage() {
           />
         )}
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-ink/50 to-ink/20" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-background via-background/80 to-transparent" />
-        <div className="mx-auto max-w-7xl px-4 pb-40 pt-24 sm:px-8 sm:pt-36">
+        <div className="mx-auto flex min-h-[42rem] max-w-7xl flex-col justify-end px-4 pb-10 pt-24 sm:min-h-[44rem] sm:px-8 sm:pb-16 sm:pt-36">
           <nav aria-label="Breadcrumb" className="mb-5 flex items-center gap-1 text-sm font-semibold text-ink-muted">
             <Link to="/india" className="hover:text-ink-foreground">
               India
@@ -99,10 +98,10 @@ function StatePage() {
               {region.name}
             </span>
           </nav>
-          <h1 className="text-6xl leading-none sm:text-8xl">
+          <h1 className="break-words text-5xl leading-none sm:text-8xl">
             <SplitText text={region.name} />
           </h1>
-          {content && <p className="animate-fade-up mt-3 max-w-xl text-xl text-ink-muted [animation-delay:0.35s]">{content.tagline}</p>}
+          {content && <p className="animate-fade-up mt-3 max-w-xl text-lg text-ink-muted [animation-delay:0.35s] sm:text-xl">{content.tagline}</p>}
           {content && (
             <div className="animate-fade-up mt-6 flex flex-wrap gap-2 [animation-delay:0.5s]">
               <span className="chip">{formatPrice(sum.from)}</span>
@@ -149,8 +148,8 @@ function StatePage() {
             {itineraries.length > 0 && (
               <section className="mt-12" aria-labelledby="itins">
                 <p className="eyebrow text-brand-deep">The playbook</p>
-                <h2 id="itins" className="mt-1 text-4xl">
-                  <SplitText text="Complete curated itineraries" />
+                <h2 id="itins" className="mt-1 text-3xl sm:text-4xl">
+                  <SplitText text="Complete travel curations" />
                 </h2>
                 <p className="mt-2 max-w-2xl text-muted-foreground">
                   A coherent plan from first stop to last — and every piece of it can be edited.
@@ -167,7 +166,7 @@ function StatePage() {
 
             <Tabs.Root value={tab} onValueChange={(v) => setTab(v as Category)}>
             <section className="mt-16 scroll-mt-24" aria-labelledby="browse">
-              <h2 id="browse" className="text-4xl">
+              <h2 id="browse" className="text-3xl sm:text-4xl">
                 <SplitText key={tab} text={CATEGORY_LABEL[tab]} />
               </h2>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -188,7 +187,7 @@ function StatePage() {
                         >
                           {list.map((l, idx) => (
                             <Reveal as="li" key={l.id} delay={(idx % 3) * 110}>
-                              <ListingCard listing={l} onOpen={setOpen} />
+                              <ListingCard listing={l} onOpen={setOpen} portrait />
                             </Reveal>
                           ))}
                         </ul>
@@ -201,7 +200,7 @@ function StatePage() {
 
             <Tabs.List
               aria-label="Listing categories"
-              className="shadow-above fixed inset-x-0 bottom-0 z-40 bg-background/90 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-md sm:px-8"
+              className="fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 mx-auto max-w-2xl rounded-3xl bg-background/92 p-2 shadow-2xl backdrop-blur-md sm:inset-x-8"
             >
               <div className="mx-auto grid max-w-2xl grid-cols-3 gap-1.5">
                 {CATEGORIES.map((c) => {

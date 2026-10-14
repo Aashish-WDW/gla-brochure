@@ -24,8 +24,9 @@ export function ItineraryCard({ itinerary }: { itinerary: Itinerary }) {
           loading="lazy"
           className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/5" aria-hidden />
         <span className="chip chip-ink absolute left-3 top-3">
-          <RouteIcon className="size-3" aria-hidden /> Curated itinerary
+          <RouteIcon className="size-3" aria-hidden /> Travel curation
         </span>
       </div>
       <div className="flex flex-col gap-3 p-5 sm:p-6">
@@ -40,15 +41,15 @@ export function ItineraryCard({ itinerary }: { itinerary: Itinerary }) {
             </span>
           ))}
         </div>
-        <h3 className="text-3xl leading-tight">{itinerary.title}</h3>
-        <p className="text-sm text-muted-foreground">{itinerary.summary}</p>
+        <h3 className="text-2xl leading-tight sm:text-3xl">{itinerary.title}</h3>
+        <p className="text-sm leading-relaxed text-muted-foreground">{itinerary.summary}</p>
         {!suits && (
           <p className="text-xs font-bold text-muted-foreground">
             Designed for individuals — can be adapted for groups.
           </p>
         )}
-        <div className="mt-auto flex items-end justify-between border-t pt-4">
-          <div>
+        <div className="mt-auto flex flex-col items-start gap-3 border-t pt-4 min-[420px]:flex-row min-[420px]:items-end min-[420px]:justify-between">
+          <div className="min-w-0">
             <p className="text-xs text-muted-foreground">
               Indicative estimate for {people} {people === 1 ? "person" : "people"}
             </p>
@@ -57,7 +58,7 @@ export function ItineraryCard({ itinerary }: { itinerary: Itinerary }) {
               {s.unconfirmed > 0 && <span className="text-xs font-semibold text-muted-foreground"> + items to confirm</span>}
             </p>
           </div>
-          <span className="inline-flex items-center gap-1 text-sm font-bold text-brand-deep">
+          <span className="inline-flex shrink-0 items-center gap-1 text-sm font-bold text-brand-deep">
             Open plan <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />
           </span>
         </div>

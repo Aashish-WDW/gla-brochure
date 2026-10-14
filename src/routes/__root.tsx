@@ -13,7 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { TripProvider } from "../lib/trip";
-import { PaperTear } from "../components/PaperTear";
+import { LoadingScreen } from "../components/LoadingScreen";
 import { ScrollProgress } from "../components/ScrollProgress";
 
 function NotFoundComponent() {
@@ -76,13 +76,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "GoLookAround — Interactive brochure & playbook" },
       {
         name: "description",
-        content: "Curated experiences, events and retreats across India, explored on an interactive globe and map.",
+        content:
+          "Curated experiences, events and retreats across India, explored on an interactive globe and map.",
       },
       { name: "author", content: "GoLookAround" },
       { property: "og:title", content: "GoLookAround — Interactive brochure & playbook" },
       {
         property: "og:description",
-        content: "Curated experiences, events and retreats across India, explored on an interactive globe and map.",
+        content:
+          "Curated experiences, events and retreats across India, explored on an interactive globe and map.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -130,7 +132,7 @@ function RootComponent() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
         <ScrollProgress />
-        <PaperTear />
+        <LoadingScreen />
       </TripProvider>
     </QueryClientProvider>
   );

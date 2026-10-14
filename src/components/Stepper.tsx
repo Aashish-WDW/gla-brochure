@@ -1,4 +1,5 @@
 import { Minus, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface StepperProps {
   label: string;
@@ -7,12 +8,17 @@ interface StepperProps {
   max: number;
   step?: number;
   onChange: (n: number) => void;
+  className?: string | undefined;
 }
 
-export function Stepper({ label, value, min, max, step = 1, onChange }: StepperProps) {
+export function Stepper({ label, value, min, max, step = 1, onChange, className }: StepperProps) {
   const clamp = (n: number) => Math.min(max, Math.max(min, n));
   return (
-    <div className="inline-flex items-center rounded-full border bg-background" role="group" aria-label={label}>
+    <div
+      className={cn("inline-flex items-center rounded-full border bg-background", className)}
+      role="group"
+      aria-label={label}
+    >
       <button
         type="button"
         className="grid size-11 place-items-center rounded-full hover:bg-muted disabled:opacity-40"

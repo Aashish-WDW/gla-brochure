@@ -1,8 +1,9 @@
 import { SplitText } from "@/components/Reveal";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, SkipForward } from "lucide-react";
+import { ArrowRight, ArrowUpRight, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Globe } from "@/components/Globe";
+import { INDIVIDUAL_URL } from "@/components/IndividualLink";
 import { SiteHeader } from "@/components/SiteHeader";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +14,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Explore India on an interactive globe and map. Discover curated experiences, events and retreats, tailor an itinerary, then enquire on WhatsApp.",
+          "Explore India on an interactive globe and map. Discover curated experiences, events and retreats, tailor a curation, then enquire on WhatsApp.",
       },
       { property: "og:title", content: "GoLookAround — Curated journeys across India" },
       {
@@ -32,8 +33,6 @@ function Landing() {
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
   const [reduced, setReduced] = useState(false);
-  const [settled, setSettled] = useState(false);
-  const [skip, setSkip] = useState(0);
   const [diving, setDiving] = useState(false);
   
   const [fallback, setFallback] = useState(false);
@@ -67,25 +66,19 @@ function Landing() {
 
       <main
         className={cn(
-          "relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-6 px-5 pb-32 pt-2 transition-opacity duration-700 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10",
+          "relative mx-auto grid w-full max-w-7xl flex-1 items-center gap-6 px-5 pb-44 pt-2 transition-opacity duration-700 sm:px-8 sm:pb-32 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-10",
           diving && "opacity-0",
         )}
       >
         <section className="stagger order-2 lg:order-1">
           <p className="eyebrow text-ink-muted">Interactive brochure &amp; playbook</p>
-          <h1 className="mt-4 text-balance text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-balance text-4xl leading-[1.02] min-[380px]:text-5xl sm:text-6xl lg:text-7xl">
             <SplitText text="India, curated for the way you travel." emphasis="curated" delay={150} />
           </h1>
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-ink-muted">
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-ink-muted sm:text-lg">
             Skip the endless tabs. Explore complete, thoughtfully planned journeys — experiences, events and
             retreats — then shape one to fit you or your group.
           </p>
-
-          {!settled && mounted && !reduced && (
-            <button type="button" className="btn btn-ghost-ink mt-8" onClick={() => setSkip((n) => n + 1)}>
-              <SkipForward className="size-4" aria-hidden /> Skip intro
-            </button>
-          )}
         </section>
 
         <section className="order-1 mx-auto w-full max-w-[min(100%,72dvh,46rem)] lg:order-2">
@@ -101,9 +94,9 @@ function Landing() {
               {mounted ? (
                 <Globe
                   reducedMotion={reduced}
-                  skipSignal={skip}
+                  skipSignal={0}
                   diving={diving}
-                  onSettled={() => setSettled(true)}
+                  onSettled={() => {}}
                   onDived={() => navigate({ to: "/india" })}
                   onSelectIndia={goIndia}
                   onFocusCountry={() => {}}
@@ -118,9 +111,20 @@ function Landing() {
       </main>
 
       <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-6" style={{ background: "linear-gradient(to top, var(--ink), transparent)" }}>
-        <button type="button" className="btn btn-primary btn-lg mx-auto flex w-full max-w-md justify-center" onClick={goIndia}>
-          GoLookAround India <ArrowRight className="size-5" aria-hidden />
-        </button>
+        <div className="mx-auto flex w-full max-w-md flex-col gap-2">
+          <a
+            href={INDIVIDUAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost-ink btn-lg w-full justify-center px-4 text-sm shadow-lg sm:hidden"
+          >
+            <User className="size-5" aria-hidden /> Looking for an individual?
+            <ArrowUpRight className="size-5" aria-hidden />
+          </a>
+          <button type="button" className="btn btn-primary btn-lg flex w-full justify-center" onClick={goIndia}>
+            GoLookAround India <ArrowRight className="size-5" aria-hidden />
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,20 +1,20 @@
 import { Link } from "@tanstack/react-router";
 import { User } from "lucide-react";
-import logoAsset from "@/assets/golookaround-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 import { INDIVIDUAL_URL } from "./IndividualLink";
 import { ShareButton } from "./ShareButton";
 
-export function Logo({ tone = "light" }: { tone?: "light" | "ink" }) {
+export function Logo() {
   return (
-    <Link to="/" className="inline-flex shrink-0 items-center gap-1.5 sm:gap-2" aria-label="GoLookAround home">
-      <img src={logoAsset.url} alt="" className="size-7 object-contain sm:size-8" />
-      <span
-        className={cn(
-          "font-brand text-[15px] font-semibold sm:text-xl leading-none tracking-tight",
-          tone === "ink" ? "text-brand-gradient" : "text-foreground",
-        )}
-      >
+    <Link
+      to="/"
+      className="inline-flex shrink-0 items-center gap-2.5 sm:gap-3"
+      aria-label="GoLookAround home"
+    >
+      <span className="grid size-10 shrink-0 place-items-center overflow-hidden rounded-full bg-black sm:size-11 lg:size-12">
+        <img src="/golookaround-site-logo.png" alt="" className="size-full object-contain" />
+      </span>
+      <span className="text-brand-gradient font-brand text-lg font-semibold leading-none tracking-tight min-[360px]:text-xl sm:text-2xl lg:text-3xl">
         GoLookAround
       </span>
     </Link>
@@ -41,29 +41,18 @@ export function SiteHeader({
         className,
       )}
     >
-      <Logo tone={tone} />
+      <Logo />
       <div className="flex items-center gap-2 sm:gap-3">
         {showIndividual && (
-          <>
-            <a
-              href={INDIVIDUAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(pill, "hidden sm:inline-flex")}
-            >
-              <User className="size-4 shrink-0" aria-hidden />
-              Looking for an individual?
-            </a>
-            <a
-              href={INDIVIDUAL_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Looking for an individual? Visit golookaround.com"
-              className={cn(pill, "sm:hidden")}
-            >
-              <User className="size-4 shrink-0" aria-hidden />
-            </a>
-          </>
+          <a
+            href={INDIVIDUAL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(pill, "hidden sm:inline-flex")}
+          >
+            <User className="size-4 shrink-0" aria-hidden />
+            Looking for an individual?
+          </a>
         )}
         {showShare && <ShareButton tone={tone} />}
       </div>

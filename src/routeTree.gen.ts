@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CategoryCategoryIdRouteImport } from './routes/category.$categoryId'
 import { Route as IndiaIndexRouteImport } from './routes/india.index'
 import { Route as IndiaStateIdRouteImport } from './routes/india.$stateId'
 import { Route as ItineraryItineraryIdRouteImport } from './routes/itinerary.$itineraryId'
@@ -17,6 +18,11 @@ import { Route as ItineraryItineraryIdRouteImport } from './routes/itinerary.$it
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryCategoryIdRoute = CategoryCategoryIdRouteImport.update({
+  id: '/category/$categoryId',
+  path: '/category/$categoryId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndiaIndexRoute = IndiaIndexRouteImport.update({
@@ -37,12 +43,14 @@ const ItineraryItineraryIdRoute = ItineraryItineraryIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/india/$stateId': typeof IndiaStateIdRoute
   '/itinerary/$itineraryId': typeof ItineraryItineraryIdRoute
   '/india/': typeof IndiaIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/india/$stateId': typeof IndiaStateIdRoute
   '/itinerary/$itineraryId': typeof ItineraryItineraryIdRoute
   '/india': typeof IndiaIndexRoute
@@ -50,21 +58,38 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/india/$stateId': typeof IndiaStateIdRoute
   '/itinerary/$itineraryId': typeof ItineraryItineraryIdRoute
   '/india/': typeof IndiaIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/india/$stateId' | '/itinerary/$itineraryId' | '/india/'
+  fullPaths:
+    | '/'
+    | '/category/$categoryId'
+    | '/india/$stateId'
+    | '/itinerary/$itineraryId'
+    | '/india/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/india/$stateId' | '/itinerary/$itineraryId' | '/india'
+  to:
+    | '/'
+    | '/category/$categoryId'
+    | '/india/$stateId'
+    | '/itinerary/$itineraryId'
+    | '/india'
   id:
-    '__root__' | '/' | '/india/$stateId' | '/itinerary/$itineraryId' | '/india/'
+    | '__root__'
+    | '/'
+    | '/category/$categoryId'
+    | '/india/$stateId'
+    | '/itinerary/$itineraryId'
+    | '/india/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CategoryCategoryIdRoute: typeof CategoryCategoryIdRoute
   IndiaStateIdRoute: typeof IndiaStateIdRoute
   ItineraryItineraryIdRoute: typeof ItineraryItineraryIdRoute
   IndiaIndexRoute: typeof IndiaIndexRoute
@@ -77,6 +102,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$categoryId': {
+      id: '/category/$categoryId'
+      path: '/category/$categoryId'
+      fullPath: '/category/$categoryId'
+      preLoaderRoute: typeof CategoryCategoryIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/india/': {
@@ -105,6 +137,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CategoryCategoryIdRoute: CategoryCategoryIdRoute,
   IndiaStateIdRoute: IndiaStateIdRoute,
   ItineraryItineraryIdRoute: ItineraryItineraryIdRoute,
   IndiaIndexRoute: IndiaIndexRoute,

@@ -54,8 +54,13 @@ export function EnquiryDialog({ open, onOpenChange, context }: Props) {
       onOpenChange={onOpenChange}
       title="Start a conversation"
       description="We'll open WhatsApp with this message ready. Nothing is booked or charged here."
+      footer={
+        <a href={url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg w-full">
+          <MessageCircle className="size-5" aria-hidden /> Enquire on WhatsApp
+        </a>
+      }
     >
-      <div className="space-y-5">
+      <div className="space-y-4">
         <div className="rounded-2xl bg-brand-soft p-4">
           <p className="eyebrow text-brand-deep">Enquiring about</p>
           <p className="mt-1 font-display text-xl leading-snug">{context.subject}</p>
@@ -72,13 +77,16 @@ export function EnquiryDialog({ open, onOpenChange, context }: Props) {
         </div>
 
         <div>
-          <label htmlFor="enq-notes" className="mb-1.5 block text-xs font-bold text-muted-foreground">
-            Anything you'd like to change? <span className="font-medium">(optional)</span>
-          </label>
+          <div className="mb-1.5 flex items-end justify-between gap-3">
+            <label htmlFor="enq-notes" className="text-xs font-bold text-muted-foreground">
+              Anything you'd like to change? <span className="font-medium">(optional)</span>
+            </label>
+            <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{notes.length}/250</span>
+          </div>
           <textarea
             id="enq-notes"
             rows={3}
-            maxLength={400}
+            maxLength={250}
             className="field !min-h-24 py-3"
             placeholder="Dietary needs, accessibility, a different pace…"
             value={notes}
@@ -92,15 +100,6 @@ export function EnquiryDialog({ open, onOpenChange, context }: Props) {
             {message}
           </p>
         </div>
-
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-primary btn-lg w-full"
-        >
-          <MessageCircle className="size-5" aria-hidden /> Enquire on WhatsApp
-        </a>
 
         <div className="rounded-2xl border p-4 text-sm">
           <p className="font-bold">Can't open WhatsApp?</p>

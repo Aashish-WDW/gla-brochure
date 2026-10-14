@@ -13,9 +13,11 @@ const AVAIL: Record<NonNullable<Listing["availability"]>, string> = {
 export function ListingCard({
   listing,
   onOpen,
+  portrait = false,
 }: {
   listing: Listing;
   onOpen: (l: Listing) => void;
+  portrait?: boolean;
 }) {
   const { mode } = useTrip();
   const suits = listing.audience.includes(mode);
@@ -33,8 +35,8 @@ export function ListingCard({
     >
       <div
         className={cn(
-          "relative overflow-hidden bg-muted",
-          "aspect-[16/10]",
+          "relative shrink-0 overflow-hidden bg-muted",
+          portrait ? "aspect-[3/4] w-full" : "aspect-[16/10]",
         )}
       >
         <img
@@ -45,11 +47,17 @@ export function ListingCard({
           height={853}
           className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/5" aria-hidden />
         <span className="chip chip-ink absolute left-3 top-3">
           <MapPin className="size-3" aria-hidden /> {listing.location}
         </span>
       </div>
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div
+        className={cn(
+          "flex min-h-0 flex-1 flex-col",
+          portrait ? "gap-2 p-4" : "gap-3 p-5",
+        )}
+      >
         <div className="flex flex-wrap items-center gap-2">
           <span className="chip">
             <Clock className="size-3" aria-hidden /> {listing.durationLabel}
@@ -61,7 +69,7 @@ export function ListingCard({
             </span>
           ))}
         </div>
-        <h3 className={cn("leading-tight", "text-xl")}>{listing.title}</h3>
+        <h3 className={cn("line-clamp-2 font-bold leading-tight", portrait ? "text-lg" : "text-xl")}>{listing.title}</h3>
         {isEvent && (
           <p className="flex items-center gap-1.5 text-sm font-semibold">
             <CalendarDays className="size-4 text-brand" aria-hidden />
@@ -71,9 +79,11 @@ export function ListingCard({
             )}
           </p>
         )}
-        <p className="line-clamp-3 text-sm text-muted-foreground">{listing.description}</p>
+        <p className={cn("text-sm text-muted-foreground", portrait ? "line-clamp-2" : "line-clamp-3")}>
+          {listing.description}
+        </p>
         {mode === "group" && listing.audience.includes("group") && (
-          <p className="flex items-center gap-1.5 text-xs font-bold text-brand-deep">
+          <p className={cn("flex items-center gap-1.5 text-xs font-bold text-brand-deep", portrait && "line-clamp-1")}>
             <Users className="size-3.5" aria-hidden /> Minimum group size applies — varies by listing
           </p>
         )}
@@ -82,9 +92,9 @@ export function ListingCard({
             Individual experience — find it on golookaround.com
           </p>
         )}
-        <div className="mt-auto flex items-end justify-between border-t pt-4">
+        <div className="mt-auto flex flex-col items-start gap-3 border-t pt-4 min-[360px]:flex-row min-[360px]:items-end min-[360px]:justify-between">
           <PriceTag price={listing.price} />
-          <span className="text-sm font-bold text-brand-deep group-hover:underline">View details →</span>
+          <span className="shrink-0 text-sm font-bold text-brand-deep group-hover:underline">View details →</span>
         </div>
       </div>
     </button>

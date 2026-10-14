@@ -24,11 +24,15 @@ const scubaSample: Listing = {
   stateId: "goa",
   location: "Goa",
   image: scuba,
-  description: "A sample coastal outing with an introductory dive, a safety briefing and time to explore underwater together. Dates, dive site and group arrangements are confirmed on enquiry.",
+  description:
+    "A sample coastal outing with an introductory dive, a safety briefing and time to explore underwater together. Dates, dive site and group arrangements are confirmed on enquiry.",
   durationHours: null,
   durationLabel: "Duration on enquiry",
   price: null,
-  inclusions: ["Sample plan: introductory briefing", "Dive equipment and instructor arrangements to be confirmed"],
+  inclusions: [
+    "Sample plan: introductory briefing",
+    "Dive equipment and instructor arrangements to be confirmed",
+  ],
   audience: ["group"],
 };
 
@@ -39,11 +43,15 @@ const balloonSample: Listing = {
   stateId: "rajasthan",
   location: "Jaipur",
   image: paragliding,
-  description: "A sample dawn flight over the fort and surrounding countryside, with a landing toast afterwards. Season, launch field and group size are confirmed on enquiry.",
+  description:
+    "A sample dawn flight over the fort and surrounding countryside, with a landing toast afterwards. Season, launch field and group size are confirmed on enquiry.",
   durationHours: null,
   durationLabel: "Duration on enquiry",
   price: null,
-  inclusions: ["Sample plan: dawn launch and landing toast", "Pilot, transfer and flight arrangements to be confirmed"],
+  inclusions: [
+    "Sample plan: dawn launch and landing toast",
+    "Pilot, transfer and flight arrangements to be confirmed",
+  ],
   audience: ["group"],
 };
 
@@ -54,21 +62,40 @@ export const ACTIVITY_CATEGORIES: ActivityCategory[] = [
     name: "For The Fam",
     subtitle: "Kitchens, farms & easy days out",
     image: IMAGES.foodClass,
-    listings: byIds("raj-food-trail", "ker-spice-class", "ka-coracle", "hp-home-dining", "raj-block-print"),
+    listings: byIds(
+      "raj-food-trail",
+      "ker-spice-class",
+      "ka-coracle",
+      "hp-home-dining",
+      "raj-block-print",
+    ),
   },
   {
     id: "for-the-soul",
     name: "For The Soul",
     subtitle: "Rishikesh, Kovalam & quiet nights",
     image: IMAGES.uttarakhandYoga,
-    listings: byIds("uk-sunrise-yoga", "uk-yoga-week", "uk-silent-retreat", "ker-ayurveda", "raj-desert-retreat"),
+    listings: byIds(
+      "uk-sunrise-yoga",
+      "uk-yoga-week",
+      "uk-silent-retreat",
+      "ker-ayurveda",
+      "raj-desert-retreat",
+    ),
   },
   {
     id: "in-the-roots",
     name: "In The Roots",
     subtitle: "Forts, ghats & old-quarter walks",
     image: IMAGES.rajasthanFort,
-    listings: byIds("raj-amer-sunrise", "goa-fontainhas", "ka-hampi-sunrise", "ker-kathakali", "ka-heritage-dance", "uk-aarti"),
+    listings: byIds(
+      "raj-amer-sunrise",
+      "goa-fontainhas",
+      "ka-hampi-sunrise",
+      "ker-kathakali",
+      "ka-heritage-dance",
+      "uk-aarti",
+    ),
   },
   {
     id: "in-the-sky",
@@ -103,9 +130,18 @@ export const ACTIVITY_CATEGORIES: ActivityCategory[] = [
     name: "Hidden Gems",
     subtitle: "Lantern nights & riverbank secrets",
     image: IMAGES.keralaBackwaters,
-    listings: byIds("raj-lantern-fest", "ker-snake-boat", "hp-folk-gathering", "goa-sunset-sessions", "goa-writers-retreat"),
+    listings: byIds(
+      "raj-lantern-fest",
+      "ker-snake-boat",
+      "hp-folk-gathering",
+      "goa-sunset-sessions",
+      "goa-writers-retreat",
+    ),
   },
 ];
+
+export const getActivityCategory = (id: string) =>
+  ACTIVITY_CATEGORIES.find((category) => category.id === id);
 
 /** True when a category mixes in a frontend-only sample plan. */
 export const categoryHasSample = (category: ActivityCategory) => category.listings.some(isSample);
