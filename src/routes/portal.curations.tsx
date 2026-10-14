@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Modal } from "@/components/Modal";
+import { CurationItinerary } from "@/components/portal/CurationItinerary";
 import { Field, inputCls, PageHead, Panel, primaryBtn, Select } from "@/components/portal/ui";
 import { REGIONS } from "@/data/regions";
 import { getRegion } from "@/lib/catalog";
@@ -22,6 +23,7 @@ const blank = (): Curation => ({
   price: null,
   minGroup: null,
   description: "",
+  days: [],
   status: "draft",
   updatedAt: "",
 });
@@ -75,7 +77,7 @@ function CurationsPage() {
         </table>
       </Panel>
 
-      <Modal open={!!edit} onOpenChange={(o) => !o && setEdit(null)} title={edit?.id ? "Edit curation" : "New curation"}>
+      <Modal open={!!edit} onOpenChange={(o) => !o && setEdit(null)} title={edit?.id ? "Edit curation" : "New curation"} size="wide">
         {edit && (
           <form onSubmit={save} className="space-y-4 p-6">
             <Field label="Title"><input required className={inputCls} value={edit.title} onChange={(e) => setEdit({ ...edit, title: e.target.value })} /></Field>
@@ -101,6 +103,7 @@ function CurationsPage() {
               <Field label="Minimum group size"><input type="number" min={1} className={inputCls} value={edit.minGroup ?? ""} onChange={(e) => setEdit({ ...edit, minGroup: num(e.target.value) })} /></Field>
             </div>
             <Field label="Description"><textarea rows={3} className={inputCls} value={edit.description} onChange={(e) => setEdit({ ...edit, description: e.target.value })} /></Field>
+            <CurationItinerary days={edit.days ?? []} groupSize={edit.minGroup} onChange={(days) => setEdit({ ...edit, days })} />
             <button className={primaryBtn}>Save curation</button>
           </form>
         )}
