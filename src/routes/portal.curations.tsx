@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Modal } from "@/components/Modal";
-import { Field, inputCls, PageHead, Panel, primaryBtn } from "@/components/portal/ui";
+import { Field, inputCls, PageHead, Panel, primaryBtn, Select } from "@/components/portal/ui";
 import { REGIONS } from "@/data/regions";
 import { getRegion } from "@/lib/catalog";
 import { type Curation, setCms, uid, useCms } from "@/lib/cms";
