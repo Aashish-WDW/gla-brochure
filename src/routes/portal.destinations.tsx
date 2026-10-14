@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Field, inputCls, PageHead, Panel, primaryBtn } from "@/components/portal/ui";
+import { Field, inputCls, PageHead, Panel, primaryBtn, Select } from "@/components/portal/ui";
 import { REGIONS } from "@/data/regions";
 import { getRegion } from "@/lib/catalog";
 import { setCms, uid, useCms } from "@/lib/cms";
@@ -34,9 +34,7 @@ function DestinationsPage() {
             <h3 className="text-xl font-bold">Add destination</h3>
             <Field label="Name"><input className={inputCls} value={name} onChange={(e) => setName(e.target.value)} required /></Field>
             <Field label="State">
-              <select className={inputCls} value={stateId} onChange={(e) => setStateId(e.target.value)}>
-                {REGIONS.map((r) => <option key={r.id} value={r.id}>{r.name}{cms.enabledStates[r.id] ? "" : " (disabled)"}</option>)}
-              </select>
+              <Select label="State" value={stateId} onChange={setStateId} options={REGIONS.map((r) => ({ value: r.id, label: r.name, hint: cms.enabledStates[r.id] ? "" : "Disabled" }))} />
             </Field>
             <Field label="Description"><textarea rows={3} className={inputCls} value={description} onChange={(e) => setDescription(e.target.value)} /></Field>
             <button className={primaryBtn}><Plus className="size-5" /> Add destination</button>
