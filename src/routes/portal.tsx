@@ -101,7 +101,7 @@ function PortalLayout() {
         <header className="flex h-[85px] items-center justify-between gap-4 border-b border-[#eff1f7] bg-[linear-gradient(90deg,#f4f6fa_0%,#f4f6fa_55%,#f5f3fb_72%)] pl-5 pr-5 sm:pl-9 sm:pr-8">
           <div>
             <p className="relative -top-[3px] text-xs font-medium leading-[18px] text-[#9192a4]">B2B Portal</p>
-            <h1 className="text-[22px] font-bold leading-7 text-[#0c0e1b]">{TITLES[path] ?? "Portal"}</h1>
+            <h1 className="relative top-[1.5px] text-[21.5px] font-bold leading-7 text-[#0c0e1b]">{TITLES[path] ?? "Portal"}</h1>
           </div>
           <div className="flex items-center gap-4">
             <label className="hidden h-[45.5px] w-[246px] items-center gap-[10px] rounded-2xl border border-[#e6e8ef] bg-white pl-[13px] pr-2 md:flex">
