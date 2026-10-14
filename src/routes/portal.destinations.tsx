@@ -1,10 +1,34 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Plus, Trash2 } from "lucide-react";
+import { ImagePlus, Plus, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import { Field, inputCls, PageHead, Panel, primaryBtn, Select } from "@/components/portal/ui";
 import { REGIONS } from "@/data/regions";
 import { getRegion } from "@/lib/catalog";
 import { setCms, uid, useCms } from "@/lib/cms";
+
+const MAX_DESC = 500;
+
+/** Downscale a picked photo to a small JPEG data URL so it fits in browser storage. */
+function readImage(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, 800 / Math.max(img.width, img.height));
+      const c = document.createElement("canvas");
+      c.width = Math.round(img.width * scale);
+      c.height = Math.round(img.height * scale);
+      c.getContext("2d")!.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      resolve(c.toDataURL("image/jpeg", 0.8));
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("bad image"));
+    };
+    img.src = url;
+  });
+}
 
 export const Route = createFileRoute("/portal/destinations")({
   head: () => ({ meta: [{ title: "Destinations — GoLookAround B2B Portal" }] }),
@@ -16,13 +40,29 @@ function DestinationsPage() {
   const [name, setName] = useState("");
   const [stateId, setStateId] = useState(REGIONS[0]!.id);
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState<string | undefined>();
+  const [imgError, setImgError] = useState("");
+
+  const pick = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const f = e.target.files?.[0];
+    e.target.value = "";
+    if (!f) return;
+    if (!f.type.startsWith("image/")) return setImgError("Please choose an image file.");
+    try {
+      setImage(await readImage(f));
+      setImgError("");
+    } catch {
+      setImgError("Couldn't read that image.");
+    }
+  };
 
   const add = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
-    setCms((s) => ({ ...s, destinations: [...s.destinations, { id: uid("d"), name: name.trim(), stateId, description }] }));
+    setCms((s) => ({ ...s, destinations: [...s.destinations, { id: uid("d"), name: name.trim(), stateId, description: description.slice(0, MAX_DESC), ...(image ? { image } : {}) }] }));
     setName("");
     setDescription("");
+    setImage(undefined);
   };
 
   return (
@@ -36,7 +76,27 @@ function DestinationsPage() {
             <Field label="State">
               <Select label="State" value={stateId} onChange={setStateId} options={REGIONS.map((r) => ({ value: r.id, label: r.name, hint: cms.enabledStates[r.id] ? "" : "Disabled" }))} />
             </Field>
-            <Field label="Description"><textarea rows={3} className={inputCls} value={description} onChange={(e) => setDescription(e.target.value)} /></Field>
+            <Field label="Photo">
+              {image ? (
+                <div className="relative overflow-hidden rounded-2xl ring-1 ring-border/70">
+                  <img src={image} alt="Destination preview" className="aspect-[16/10] w-full object-cover" />
+                  <button type="button" aria-label="Remove photo" onClick={() => setImage(undefined)} className="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-white/90 shadow">
+                    <X className="size-4" />
+                  </button>
+                </div>
+              ) : (
+                <label className="flex cursor-pointer flex-col items-center gap-2 rounded-2xl border border-dashed border-border px-4 py-6 text-sm text-muted-foreground hover:bg-muted/40">
+                  <ImagePlus className="size-6" />
+                  <span>Add a photo</span>
+                  <input type="file" accept="image/*" className="sr-only" onChange={pick} />
+                </label>
+              )}
+              {imgError && <p className="mt-1 text-sm text-destructive">{imgError}</p>}
+            </Field>
+            <Field label="Description">
+              <textarea rows={4} maxLength={MAX_DESC} className={inputCls} value={description} onChange={(e) => setDescription(e.target.value)} />
+              <p className="mt-1 text-right text-xs text-muted-foreground">{description.length}/{MAX_DESC}</p>
+            </Field>
             <button className={primaryBtn}><Plus className="size-5" /> Add destination</button>
           </form>
         </Panel>
@@ -45,9 +105,10 @@ function DestinationsPage() {
           <ul className="mt-4 divide-y">
             {cms.destinations.map((d) => (
               <li key={d.id} className="flex items-center justify-between gap-3 py-3">
-                <div>
+                {d.image && <img src={d.image} alt="" className="size-14 shrink-0 rounded-xl object-cover" />}
+                <div className="min-w-0 flex-1">
                   <p className="font-semibold">{d.name}</p>
-                  <p className="text-sm text-muted-foreground">{getRegion(d.stateId)?.name}{d.description && ` · ${d.description}`}</p>
+                  <p className="line-clamp-2 text-sm text-muted-foreground">{getRegion(d.stateId)?.name}{d.description && ` · ${d.description}`}</p>
                 </div>
                 <button
                   aria-label={`Delete ${d.name}`}

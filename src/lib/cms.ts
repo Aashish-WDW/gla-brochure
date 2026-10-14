@@ -11,6 +11,8 @@ export interface Destination {
   name: string;
   stateId: string;
   description: string;
+  /** Optional photo, stored as a compressed data URL (demo, browser-only). */
+  image?: string;
 }
 
 export interface Curation {
