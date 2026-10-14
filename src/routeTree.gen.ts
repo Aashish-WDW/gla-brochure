@@ -10,14 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as CategoryCategoryIdRouteImport } from './routes/category.$categoryId'
 import { Route as IndiaIndexRouteImport } from './routes/india.index'
 import { Route as IndiaStateIdRouteImport } from './routes/india.$stateId'
 import { Route as ItineraryItineraryIdRouteImport } from './routes/itinerary.$itineraryId'
+import { Route as PortalIndexRouteImport } from './routes/portal.index'
+import { Route as PortalCurationsRouteImport } from './routes/portal.curations'
+import { Route as PortalDestinationsRouteImport } from './routes/portal.destinations'
+import { Route as PortalStatesRouteImport } from './routes/portal.states'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoryCategoryIdRoute = CategoryCategoryIdRouteImport.update({
@@ -40,55 +50,104 @@ const ItineraryItineraryIdRoute = ItineraryItineraryIdRouteImport.update({
   path: '/itinerary/$itineraryId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCurationsRoute = PortalCurationsRouteImport.update({
+  id: '/curations',
+  path: '/curations',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDestinationsRoute = PortalDestinationsRouteImport.update({
+  id: '/destinations',
+  path: '/destinations',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalStatesRoute = PortalStatesRouteImport.update({
+  id: '/states',
+  path: '/states',
+  getParentRoute: () => PortalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/portal': typeof PortalRouteWithChildren
   '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/india/$stateId': typeof IndiaStateIdRoute
   '/itinerary/$itineraryId': typeof ItineraryItineraryIdRoute
+  '/portal/curations': typeof PortalCurationsRoute
+  '/portal/destinations': typeof PortalDestinationsRoute
+  '/portal/states': typeof PortalStatesRoute
   '/india/': typeof IndiaIndexRoute
+  '/portal/': typeof PortalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/india/$stateId': typeof IndiaStateIdRoute
   '/itinerary/$itineraryId': typeof ItineraryItineraryIdRoute
+  '/portal/curations': typeof PortalCurationsRoute
+  '/portal/destinations': typeof PortalDestinationsRoute
+  '/portal/states': typeof PortalStatesRoute
   '/india': typeof IndiaIndexRoute
+  '/portal': typeof PortalIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/portal': typeof PortalRouteWithChildren
   '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/india/$stateId': typeof IndiaStateIdRoute
   '/itinerary/$itineraryId': typeof ItineraryItineraryIdRoute
+  '/portal/curations': typeof PortalCurationsRoute
+  '/portal/destinations': typeof PortalDestinationsRoute
+  '/portal/states': typeof PortalStatesRoute
   '/india/': typeof IndiaIndexRoute
+  '/portal/': typeof PortalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/portal'
     | '/category/$categoryId'
     | '/india/$stateId'
     | '/itinerary/$itineraryId'
+    | '/portal/curations'
+    | '/portal/destinations'
+    | '/portal/states'
     | '/india/'
+    | '/portal/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/category/$categoryId'
     | '/india/$stateId'
     | '/itinerary/$itineraryId'
+    | '/portal/curations'
+    | '/portal/destinations'
+    | '/portal/states'
     | '/india'
+    | '/portal'
   id:
     | '__root__'
     | '/'
+    | '/portal'
     | '/category/$categoryId'
     | '/india/$stateId'
     | '/itinerary/$itineraryId'
+    | '/portal/curations'
+    | '/portal/destinations'
+    | '/portal/states'
     | '/india/'
+    | '/portal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PortalRoute: typeof PortalRouteWithChildren
   CategoryCategoryIdRoute: typeof CategoryCategoryIdRoute
   IndiaStateIdRoute: typeof IndiaStateIdRoute
   ItineraryItineraryIdRoute: typeof ItineraryItineraryIdRoute
@@ -102,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/category/$categoryId': {
@@ -132,11 +198,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ItineraryItineraryIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/curations': {
+      id: '/portal/curations'
+      path: '/curations'
+      fullPath: '/portal/curations'
+      preLoaderRoute: typeof PortalCurationsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/destinations': {
+      id: '/portal/destinations'
+      path: '/destinations'
+      fullPath: '/portal/destinations'
+      preLoaderRoute: typeof PortalDestinationsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/states': {
+      id: '/portal/states'
+      path: '/states'
+      fullPath: '/portal/states'
+      preLoaderRoute: typeof PortalStatesRouteImport
+      parentRoute: typeof PortalRoute
+    }
   }
 }
 
+interface PortalRouteChildren {
+  PortalCurationsRoute: typeof PortalCurationsRoute
+  PortalDestinationsRoute: typeof PortalDestinationsRoute
+  PortalStatesRoute: typeof PortalStatesRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalCurationsRoute: PortalCurationsRoute,
+  PortalDestinationsRoute: PortalDestinationsRoute,
+  PortalStatesRoute: PortalStatesRoute,
+  PortalIndexRoute: PortalIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PortalRoute: PortalRouteWithChildren,
   CategoryCategoryIdRoute: CategoryCategoryIdRoute,
   IndiaStateIdRoute: IndiaStateIdRoute,
   ItineraryItineraryIdRoute: ItineraryItineraryIdRoute,
