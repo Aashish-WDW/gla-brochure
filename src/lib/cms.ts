@@ -29,7 +29,7 @@ export interface CurationStop {
   end: string;
   /** null = "Request a quote" — never invent prices. */
   pricePerPerson: number | null;
-  image?: string;
+  image?: string | undefined;
 }
 
 export interface CurationDay {
